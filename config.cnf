@@ -1,0 +1,7 @@
+[SAP]
+user = MRAM
+passwd = Sap@123
+ashost = 52.207.1.100
+sysnr = 01
+sid = PC3
+client = 100
