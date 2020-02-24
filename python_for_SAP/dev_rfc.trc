@@ -1,0 +1,165 @@
+
+**** Trace file opened at 2020-02-20 13:52:38.972736 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 5, Compiled on Aug 20 2019 21:18:37
+ CPIC library: 753.2019.02.22 version 3, NI library: 40, Kernel Release: 753 Patch Level 500
+ Current working directory: /root/SAP_System_Refresh/python_for_SAP, Program: python
+ Hardware: AMD/Intel x86_64 with Linux x86_64, Operating_system: Linux 4.14.165-133.209.amzn2.x86_64
+ Hostname: ip-192-168-0-155.ec2.internal, IP address: 192.168.0.155, IPv6 address: fe80::c90:fcff:fe38:4269
+
+2020-02-20 13:52:38.972778 [139753324889280] >> Info entry
+	Searching for config file sapnwrfc.ini
+
+
+**** Trace file opened at 2020-02-20 13:52:38.972812 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 5, Compiled on Aug 20 2019 21:18:37
+ CPIC library: 753.2019.02.22 version 3, NI library: 40, Kernel Release: 753 Patch Level 500
+ Current working directory: /root/SAP_System_Refresh/python_for_SAP, Program: python
+ Hardware: AMD/Intel x86_64 with Linux x86_64, Operating_system: Linux 4.14.165-133.209.amzn2.x86_64
+ Hostname: ip-192-168-0-155.ec2.internal, IP address: 192.168.0.155, IPv6 address: fe80::c90:fcff:fe38:4269
+
+2020-02-20 13:52:38.972835 [139753324889280] >> Error entry
+	The UUID daemon (uuidd) is not active.
+Please ask your system administrator to activate uuidd according to SAP note 1391070.
+
+2020-02-20 13:54:11.577997 [139753324889280] >> Error entry
+	[Handle: 29471104	ConvID: 	SysID: 	SysNr: 	Target: 	User: 	Codepage: 4103]
+	ommunicationException: Key: RFC_COMMUNICATION_FAILURE, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host ip-192-168-0-155.ec2.internal with
+            Unicode
+ERROR       partner '52.207.1.100:3301' not reached
+TIME        Thu Feb 20 13:54:11 2020
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      /bas/753_REL/src/base/ni/nibuf.cpp
+LINE        4568
+DETAIL      NiBufIConnect: connection pending after 60000ms
+SYSTEM CALL connect
+ERRNO       4
+ERRNO TEXT  Interrupted system call
+COUNTER     2
+
+
+**** Trace file opened at 2020-02-20 13:58:40.401132 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 5, Compiled on Aug 20 2019 21:18:37
+ CPIC library: 753.2019.02.22 version 3, NI library: 40, Kernel Release: 753 Patch Level 500
+ Current working directory: /root/SAP_System_Refresh/python_for_SAP, Program: python
+ Hardware: AMD/Intel x86_64 with Linux x86_64, Operating_system: Linux 4.14.165-133.209.amzn2.x86_64
+ Hostname: ip-192-168-0-155.ec2.internal, IP address: 192.168.0.155, IPv6 address: fe80::c90:fcff:fe38:4269
+
+2020-02-20 13:58:40.401178 [140203076822208] >> Info entry
+	Searching for config file sapnwrfc.ini
+
+
+**** Trace file opened at 2020-02-20 13:58:40.401211 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 5, Compiled on Aug 20 2019 21:18:37
+ CPIC library: 753.2019.02.22 version 3, NI library: 40, Kernel Release: 753 Patch Level 500
+ Current working directory: /root/SAP_System_Refresh/python_for_SAP, Program: python
+ Hardware: AMD/Intel x86_64 with Linux x86_64, Operating_system: Linux 4.14.165-133.209.amzn2.x86_64
+ Hostname: ip-192-168-0-155.ec2.internal, IP address: 192.168.0.155, IPv6 address: fe80::c90:fcff:fe38:4269
+
+2020-02-20 13:58:40.401237 [140203076822208] >> Error entry
+	The UUID daemon (uuidd) is not active.
+Please ask your system administrator to activate uuidd according to SAP note 1391070.
+
+2020-02-20 13:59:40.489606 [140203076822208] >> Error entry
+	[Handle: 7037312	ConvID: 	SysID: 	SysNr: 	Target: 	User: 	Codepage: 4103]
+	ommunicationException: Key: RFC_COMMUNICATION_FAILURE, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host ip-192-168-0-155.ec2.internal with
+            Unicode
+ERROR       partner '52.207.1.100:3301' not reached
+TIME        Thu Feb 20 13:59:40 2020
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      /bas/753_REL/src/base/ni/nibuf.cpp
+LINE        4568
+DETAIL      NiBufIConnect: connection pending after 60000ms
+SYSTEM CALL connect
+ERRNO       115
+ERRNO TEXT  Operation now in progress
+COUNTER     2
+
+
+**** Trace file opened at 2020-02-21 11:01:48.011942 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 5, Compiled on Aug 20 2019 21:18:37
+ CPIC library: 753.2019.02.22 version 3, NI library: 40, Kernel Release: 753 Patch Level 500
+ Current working directory: /root/SAP_System_Refresh/python_for_SAP, Program: python
+ Hardware: AMD/Intel x86_64 with Linux x86_64, Operating_system: Linux 4.14.165-133.209.amzn2.x86_64
+ Hostname: ip-192-168-0-155.ec2.internal, IP address: 192.168.0.155, IPv6 address: fe80::c90:fcff:fe38:4269
+
+2020-02-21 11:01:48.012005 [139687587005632] >> Info entry
+	Searching for config file sapnwrfc.ini
+
+
+**** Trace file opened at 2020-02-21 11:01:48.012059 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 5, Compiled on Aug 20 2019 21:18:37
+ CPIC library: 753.2019.02.22 version 3, NI library: 40, Kernel Release: 753 Patch Level 500
+ Current working directory: /root/SAP_System_Refresh/python_for_SAP, Program: python
+ Hardware: AMD/Intel x86_64 with Linux x86_64, Operating_system: Linux 4.14.165-133.209.amzn2.x86_64
+ Hostname: ip-192-168-0-155.ec2.internal, IP address: 192.168.0.155, IPv6 address: fe80::c90:fcff:fe38:4269
+
+2020-02-21 11:01:48.012085 [139687587005632] >> Error entry
+	The UUID daemon (uuidd) is not active.
+Please ask your system administrator to activate uuidd according to SAP note 1391070.
+
+2020-02-21 11:02:48.331119 [139687587005632] >> Error entry
+	[Handle: 28336512	ConvID: 	SysID: 	SysNr: 	Target: 	User: 	Codepage: 4103]
+	ommunicationException: Key: RFC_COMMUNICATION_FAILURE, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host ip-192-168-0-155.ec2.internal with
+            Unicode
+ERROR       partner '52.207.1.100:3301' not reached
+TIME        Fri Feb 21 11:02:48 2020
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      /bas/753_REL/src/base/ni/nibuf.cpp
+LINE        4568
+DETAIL      NiBufIConnect: connection pending after 60000ms
+SYSTEM CALL connect
+ERRNO       115
+ERRNO TEXT  Operation now in progress
+COUNTER     2
+
+
+**** Trace file opened at 2020-02-24 12:37:13.989863 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 5, Compiled on Aug 20 2019 21:18:37
+ CPIC library: 753.2019.02.22 version 3, NI library: 40, Kernel Release: 753 Patch Level 500
+ Current working directory: /root/SAP_System_Refresh/python_for_SAP, Program: python
+ Hardware: AMD/Intel x86_64 with Linux x86_64, Operating_system: Linux 4.14.165-133.209.amzn2.x86_64
+ Hostname: ip-172-30-81-191.ec2.internal, IP address: 172.30.81.191, IPv6 address: fe80::89d:8ff:fe81:6fd9
+
+2020-02-24 12:37:13.990292 [140533560513728] >> Info entry
+	Searching for config file sapnwrfc.ini
+
+
+**** Trace file opened at 2020-02-24 12:37:13.990336 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 5, Compiled on Aug 20 2019 21:18:37
+ CPIC library: 753.2019.02.22 version 3, NI library: 40, Kernel Release: 753 Patch Level 500
+ Current working directory: /root/SAP_System_Refresh/python_for_SAP, Program: python
+ Hardware: AMD/Intel x86_64 with Linux x86_64, Operating_system: Linux 4.14.165-133.209.amzn2.x86_64
+ Hostname: ip-172-30-81-191.ec2.internal, IP address: 172.30.81.191, IPv6 address: fe80::89d:8ff:fe81:6fd9
+
+2020-02-24 12:37:13.990354 [140533560513728] >> Error entry
+	The UUID daemon (uuidd) is not active.
+Please ask your system administrator to activate uuidd according to SAP note 1391070.
+
+2020-02-24 12:37:54.096435 [140533560513728] >> Error entry
+	[Handle: 27775360	ConvID: 66606042	SysID: 	SysNr: 	Target: 	User: 	Codepage: 4103]
+	ommunicationException: Key: RFC_COMMUNICATION_FAILURE, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    SAP-Gateway on host sstsap06 / sapgw01
+ERROR       timeout during allocate
+TIME        Mon Feb 24 12:37:54 2020
+RELEASE     753
+COMPONENT   SAP-Gateway
+VERSION     2
+RC          242
+MODULE      /bas/753_REL/src/krn/si/gw/gwr3cpic.c
+LINE        2210
+DETAIL      no connect of TP sapdp01 from host
+            ec2-52-207-1-100.compute-1.amazonaws.com after 20 sec
+COUNTER     2
+
