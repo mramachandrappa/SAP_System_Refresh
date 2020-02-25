@@ -17,6 +17,8 @@ def connect():
     attr = conn.get_connection_attributes()
     if attr['isoLanguage'] != u'EN':
         raise pyrfc.RFCError("Testing must be done with English language")
+    else:
+        print ("Success")
 
 connect()
 
