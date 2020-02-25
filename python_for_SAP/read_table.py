@@ -10,7 +10,7 @@ def connect():
 
     conn = Connection(user=creds['user'], passwd=creds['passwd'], ashost=creds['ashost'], sysnr=creds['sysnr'], sid=creds['sid'], client=creds['client'])
 
-    tables = conn.call("RFC_GET_TABLE_ENTRIES", QUERY_TABLE='USR02')
+    tables = conn.call("RFC_GET_TABLE_ENTRIES", TABLE_NAME='USR02')
 
     print(tables)
 
