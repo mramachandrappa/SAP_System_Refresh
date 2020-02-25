@@ -4,3 +4,5 @@ config.cnf
 python_for_SAP/config.cnf
 python_for_SAP/.idea/*
 python_for_SAP/.idea
+.idea/
+.idea/*
