@@ -2,35 +2,30 @@ from pyrfc import Connection
 from configparser import ConfigParser
 
 
-class main():
+class Main:
 
     def __init__(self):
         config = ConfigParser()
         config.read("/root/SAP_System_Refresh/python_for_SAP/config.cnf")
-        creds = config['SAP']
+        self.creds = config['SAP']
 
-        self.conn = Connection(user=creds['user'], passwd=creds['passwd'], ashost=creds['ashost'], sysnr=creds['sysnr'], sid=creds['sid'], client=creds['client'])
+        self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'],
+                               sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
     
-    def users_list(self):
-        tables = self.conn.call("RFC_GET_TABLE_ENTRIES", TABLE_NAME='USR02')
+    def users_list(self, table_name):
+        tables = self.conn.call("RFC_GET_TABLE_ENTRIES", TABLE_NAME=table_name)
     
         user_names = []
 
         for key, value in tables.items():
-            print(key, '->', value)
             if key == 'ENTRIES':
                 entries = value
                 for users in entries:
                     for name in users.values():
                         user_names.append(name[3:])
 
-    #for users in user_names:
-    #3    if users == 'BJOERN':
-      #      pass
-       # else:
-        #    conn.call("BAPI_USER_LOCK", USERNAME=users)
-    
         print(user_names)
 
 
-main()
+s = Main()
+s.users_list('USR02')
