@@ -8,7 +8,7 @@ except ModuleNotFoundError as e:
 
 def connect():
 
-    config = configparser.ConfigParser()
+    config = ConfigParser()
     config.read("/root/SAP_System_Refresh/python_for_SAP/config.cnf")
     creds = config['SAP']
 
