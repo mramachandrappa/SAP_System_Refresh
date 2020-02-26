@@ -27,12 +27,18 @@ class SAPRefresh:
         print(user_names)
 
     def locked_users(self):
-        tables = self.conn.call("BAPI_USER_GETLIST", SELECTION_RANGE=[{'PARAMETER':'ISLOCKED'}, {'FIELD':'LOCAL_LOCK'}, {'S':'I'},
-                                                                      {'OP':'EQ'}, {'LOW':'L'}])
+        tables = self.conn.call("BAPI_USER_GETLIST", SELECTION_RANGE=[{'PARAMETER':'ISLOCKED', 'FIELD':'LOCAL_LOCK', 
+                                                                       'SIGN':'I', 'OPTION':'EQ', 'LOW':'L'}])
+        locked_user_list = []
 
-        print(tables)
+        for key, value in tables.items():
+            if key == 'USERLIST':
+                user_list = value
+                for users in user_list:
+                    locked_user_list.append(users['USERNAME'])
+        print(locked_user_list)
 
 
 s = SAPRefresh()
-#s.users_list('USR02')
+s.users_list('USR02')
 s.locked_users()
