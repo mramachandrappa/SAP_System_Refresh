@@ -41,19 +41,30 @@ class SAPRefresh:
 
     def user_lock(self, user_list):
         self.config.read("/root/SAP_System_Refresh/python_for_SAP/exception_list.txt")
-        self.users = self.config['exception_user_list']
-        exception_list = self.users['users']
+        except_users_list = self.config['exception_user_list']['users']
+        
+        print("Except_users_list =>", except_users_list)
+
+        users_locked = []
 
         for user in user_list:
-            print(user)
+            if user not in except_users_list:
+                self.conn.call('BAPI_USER_LOCK', USERNAME=user)
+                users_locked.append(user)
 
+        return users_locked
+        
 
-
+    
 
 s = SAPRefresh()
 user_list = s.users_list('USR02')
 locked_users = s.locked_users()
-s.user_lock(user_list)
+users_locked = s.user_lock(user_list)
+
+print("User_list =>", user_list)
+print("Already_Locked_users =>", locked_users)
+print("Final_users_locked =>", users_locked)
 
 
 
