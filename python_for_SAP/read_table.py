@@ -24,11 +24,11 @@ class SAPRefresh:
                     for name in users.values():
                         user_names.append(name[3:])
 
-        print(user_names)
+        return user_names
 
     def locked_users(self):
-        tables = self.conn.call("BAPI_USER_GETLIST", SELECTION_RANGE=[{'PARAMETER':'ISLOCKED', 'FIELD':'LOCAL_LOCK', 
-                                                                       'SIGN':'I', 'OPTION':'EQ', 'LOW':'L'}])
+        tables = self.conn.call("BAPI_USER_GETLIST", SELECTION_RANGE=[{'PARAMETER': 'ISLOCKED', 'FIELD': 'LOCAL_LOCK',
+                                                                       'SIGN': 'I', 'OPTION': 'EQ', 'LOW': 'L'}])
         locked_user_list = []
 
         for key, value in tables.items():
@@ -36,9 +36,24 @@ class SAPRefresh:
                 user_list = value
                 for users in user_list:
                     locked_user_list.append(users['USERNAME'])
-        print(locked_user_list)
+
+        return locked_user_list
+
+    def user_lock(self, user_list):
+        self.config.read("/root/SAP_System_Refresh/python_for_SAP/exception_list.txt")
+        self.users = self.config['exception_user_list']
+        exception_list = self.users['users']
+
+        for user in user_list:
+            print(user)
+
+
 
 
 s = SAPRefresh()
-s.users_list('USR02')
-s.locked_users()
+user_list = s.users_list('USR02')
+locked_users = s.locked_users()
+s.user_lock(user_list)
+
+
+
