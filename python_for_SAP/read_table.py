@@ -2,12 +2,12 @@ from pyrfc import Connection
 from configparser import ConfigParser
 
 
-class Main:
+class SAPRefresh:
 
     def __init__(self):
-        config = ConfigParser()
-        config.read("/root/SAP_System_Refresh/python_for_SAP/config.cnf")
-        self.creds = config['SAP']
+        self.config = ConfigParser()
+        self.config.read("/root/SAP_System_Refresh/python_for_SAP/config.cnf")
+        self.creds = self.config['SAP']
 
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'],
                                sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
@@ -26,6 +26,13 @@ class Main:
 
         print(user_names)
 
+    def locked_users(self):
+        tables = self.conn.call("BAPI_USER_GETLIST", SELECTION_RANGE=[{'PARAMETER':'ISLOCKED'}, {'FIELD':'LOCAL_LOCK'}, {'S':'I'},
+                                                                      {'OP':'EQ'}, {'LOW':'L'}])
 
-s = Main()
-s.users_list('USR02')
+        print(tables)
+
+
+s = SAPRefresh()
+#s.users_list('USR02')
+s.locked_users()
