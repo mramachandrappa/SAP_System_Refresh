@@ -64,6 +64,10 @@ class SAPRefresh:
 
         print(self.conn.call("SXPG_COMMAND_EXECUTE", COMMANDNAME=cmd))
 
+    def export_printer_devices(self):
+
+        print(self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME='RSPOXDEV', IV_REPNAME='RSPOXDEV', IV_VARNAME='PRINT_EXP'))
+
 s = SAPRefresh()
 #user_list = s.users_list('USR02')
 #locked_users = s.locked_users()
@@ -75,3 +79,4 @@ s = SAPRefresh()
 
 #s.suspend_jobs('BTCTRNS1')
 #s.export_sys_tables('ZTABEXP')
+s.export_printer_devices()
