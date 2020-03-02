@@ -26,7 +26,14 @@ class SAPRefresh:
         return user_names
 
     def locked_users(self):
-        tables = self.conn.call("BAPI_USER_GETLIST", SELECTION_RANGE=[{'PARAMETER': 'ISLOCKED', 'FIELD': 'LOCAL_LOCK', 'SIGN': 'I', 'OPTION': 'EQ', 'LOW': 'L'}])
+        params = dict(
+                    PARAMETER='ISLOCKED',
+                    FIELD='LOCAL_LOCK',
+                    SIGN='I',
+                    OPTION='EQ',
+                    LOW='L'
+                    )
+        tables = self.conn.call("BAPI_USER_GETLIST", SELECTION_RANGE=[params])
         locked_user_list = []
 
         for key, value in tables.items():
@@ -67,6 +74,14 @@ class SAPRefresh:
     def export_printer_devices(self):
 
         print(self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME='RSPOXDEV', IV_REPNAME='RSPOXDEV', IV_VARNAME='PRINT_EXP'))
+        
+        self.conn.close()
+
+    def import_printer_devices(self):
+
+        print(self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME='RSPOXDEV', IV_REPNAME='RSPOXDEV', IV_VARNAME='PRINT_IMP'))
+        
+        self.conn.close()
 
 s = SAPRefresh()
 #user_list = s.users_list('USR02')
@@ -79,4 +94,5 @@ s = SAPRefresh()
 
 #s.suspend_jobs('BTCTRNS1')
 #s.export_sys_tables('ZTABEXP')
-s.export_printer_devices()
+#s.export_printer_devices()
+#s.import_printer_devices()
