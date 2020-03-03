@@ -1,0 +1,14 @@
+ENTRY_ID,RESPTI,PROCTI,CPUTI,ROLLWAITTI,GUITIME
+RSPOWP00                                                                R,2969,1972,1430,0,0
+(BATCH)                                                                 R,8403,4715,4060,0,0
+Buf.Sync                                                                R,660,373,310,0,0
+AutoABAP                                                                R,413406,406800,23130,0,0
+<AUTO SECURITY PROCESSING>                                              R,5416,2567,970,0,0
+<AUTO TASKHANDLER PROCESSING>                                           R,743,591,470,0,0
+<DDLOC CLEANUP>                                                         R,426,349,220,0,0
+<DELAY - ab_APGMain>                                                    R,652,352,360,0,0
+<AUTO CCMS PROCESSING>                                                  R,1861,1705,410,0,0
+<NUMBER RANGE BUFFER>                                                   R,4,2,10,0,0
+RFC                                                                     R,361,340,280,0,0
+RS_AMDP_AUTOABAP                                                        R,3329,2643,2150,0,0
+RS_ENQ_CTX_CLEANUP_TASK                                                 R,2979,1451,1430,0,0
