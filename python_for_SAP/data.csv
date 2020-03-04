@@ -1,14 +1,63 @@
 ENTRY_ID,RESPTI,PROCTI,CPUTI,ROLLWAITTI,GUITIME
-RSPOWP00                                                                R,2969,1972,1430,0,0
-(BATCH)                                                                 R,8403,4715,4060,0,0
-Buf.Sync                                                                R,660,373,310,0,0
-AutoABAP                                                                R,413406,406800,23130,0,0
-<AUTO SECURITY PROCESSING>                                              R,5416,2567,970,0,0
-<AUTO TASKHANDLER PROCESSING>                                           R,743,591,470,0,0
-<DDLOC CLEANUP>                                                         R,426,349,220,0,0
-<DELAY - ab_APGMain>                                                    R,652,352,360,0,0
-<AUTO CCMS PROCESSING>                                                  R,1861,1705,410,0,0
-<NUMBER RANGE BUFFER>                                                   R,4,2,10,0,0
-RFC                                                                     R,361,340,280,0,0
-RS_AMDP_AUTOABAP                                                        R,3329,2643,2150,0,0
-RS_ENQ_CTX_CLEANUP_TASK                                                 R,2979,1451,1430,0,0
+/1BCDWB/DBE070L                                                         R,1,0,0,0,0
+MainMenu                                                                R,0,0,0,0,0
+RSABAPPROGRAM                                                           R,62616,14665,2360,44721,53276
+RSCLXCOP                                                                R,22,11,10,0,0
+RSTPDAMAIN                                                              R,35127,8312,420,26562,15094
+RS_TESTFRAME_CALL                                                       R,1,0,0,0,0
+SAPLBTCH                                                                R,3,1,10,0,0
+SCC3                                                                    T,2652,157,170,2435,2435
+SCC8                                                                    T,1885,63,90,1766,1766
+SE11                                                                    T,448,50,70,317,317
+SE16                                                                    T,3346,270,460,2614,2614
+SE37                                                                    T,26577,6460,2670,17593,21706
+SESSION_MANAGER                                                         T,8866,208,230,8538,8538
+SLICENSE                                                                T,4486,29,20,4447,4447
+SM37                                                                    T,3997,332,380,3432,3432
+SNRO                                                                    T,12927,214,210,12277,12277
+ST03N                                                                   T,1795,85,90,1404,1404
+SU01                                                                    T,654,145,170,0,0
+ZRSCLXCOP                                                               R,122345,72028,1450,49481,49481
+Login_Pw                                                                R,3,2,0,0,0
+RSM13000                                                                R,29,3,20,0,0
+RSPOWP00                                                                R,4309,2800,2190,0,0
+RSBTCRTE                                                                R,131,34,70,0,0
+SAPRSEUT                                EU_PUT                          R,52,19,20,0,0
+SAPRSLOG                                EU_REORG                        R,3915,2454,2540,0,0
+RDDEXPOL                                RDDVERSE                        R,256,58,80,0,0
+RDDIMPDP                                RDDIMPDP                        R,111,27,30,0,0
+RSBTCRTE                                                                R,92,25,40,0,0
+RSBTCRTE                                                                R,109,25,60,0,0
+ZRSCLXCOP                               ZRSCLXCOP                       R,8651,5139,1700,0,0
+(BATCH)                                                                 R,12402,6732,6150,0,0
+Buf.Sync                                                                R,1452,671,510,0,0
+AutoABAP                                                                R,596110,585466,33590,0,0
+RSM13000                                                                R,16,1,10,0,0
+SU01                                                                    T,35,12,10,0,0
+<AD_RESET_BUFFERED_TABLE>                                               R,1,0,0,0,0
+<AUTO SECURITY PROCESSING>                                              R,7904,3726,1320,0,0
+<AUTO TASKHANDLER PROCESSING>                                           R,1082,833,710,0,0
+<RPC(GENERATE ABAP (CLI WP 0))>                                         R,29,21,20,0,0
+<RPC(GENERATE ABAP (CLI WP 5))>                                         R,27,19,20,0,0
+<RPC(GENERATE ABAP (CLI WP 8))>                                         R,24,17,10,0,0
+<RPC(GENERATE DYNPRO (CLI WP 4))>                                       R,42,15,20,0,0
+<RPC(GENERATE DYNPRO (CLI WP 8))>                                       R,22,8,20,0,0
+<RPC(GENERATE DYNPRO (CLI WP 9))>                                       R,102,43,50,0,0
+RSDBAMDP                                                                R,71,24,30,0,0
+SAPLSMPI                                                                R,435,105,90,0,0
+<DDLOC CLEANUP>                                                         R,1079,906,410,0,0
+SAPMSSYC                                                                R,186,138,140,0,0
+<DELAY - ab_APGMain>                                                    R,961,504,830,0,0
+<DELAY - ab_ShmLifeTimePassed>                                          R,5,4,0,0,0
+<DELAY - dy_dbupd>                                                      R,139,73,50,0,0
+<DELAYED FUNCTION CALL>                                                 R,1,0,0,0,0
+<AUTO CCMS PROCESSING>                                                  R,2754,2485,590,0,0
+<NUMBER RANGE BUFFER>                                                   R,18,10,10,0,0
+RFC                                                                     R,18,12,0,0,0
+SAPLARFC                                                                R,500,479,10,0,0
+SAPLERFC                                                                R,466,160,130,0,0
+SAPLSEWORKINGAREA                                                       R,4,3,10,0,0
+python                                                                  R,5100,2469,1970,0,0
+RFC                                                                     R,517,475,470,0,0
+RS_AMDP_AUTOABAP                                                        R,4481,3528,3020,0,0
+RS_ENQ_CTX_CLEANUP_TASK                                                 R,4362,2060,2130,0,0
