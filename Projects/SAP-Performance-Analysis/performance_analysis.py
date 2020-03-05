@@ -1,5 +1,6 @@
 from pyrfc import Connection
 from configparser import ConfigParser
+import datetime
 import csv
 
 class SAPPerfAnalysis:
@@ -20,6 +21,7 @@ class SAPPerfAnalysis:
                     usertcode = value
                     for users in usertcode:
                         rows.append(users)
+
             ENTRY_ID = [i['ENTRY_ID']for i in rows]
             RESPTI = [i['RESPTI']/1000 for i in rows]
             PROCTI = [i['PROCTI']/1000 for i in rows]
@@ -138,3 +140,5 @@ s = SAPPerfAnalysis()
 #s.analytics()
 #s.mon_header_data()
 s.get_mem_all()
+s.get_cpu_all()
+s.server_list()
