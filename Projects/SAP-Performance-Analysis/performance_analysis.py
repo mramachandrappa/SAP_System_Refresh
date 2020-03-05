@@ -82,6 +82,33 @@ class SAPPerfAnalysis:
         except Exception as e:
             print(e)
 
+    def get_cpu_all(self):
+        rows = []
+        try:
+            output = self.conn.call("GET_CPU_ALL")
+            for key, value in output.items():
+                if key == 'TF_CPU_ALL':
+                    cpu_all = value
+                    for cpu in cpu_all:
+                        rows.append(cpu)
+
+            NBR_CPU = [i['NBR_CPU'] / 1000 for i in rows]
+            USR_TOTAL = [i['USR_TOTAL'] / 1000 for i in rows]
+            SYS_TOTAL = [i['SYS_TOTAL'] / 1000 for i in rows]
+            IDLE_TOTAL = [i['IDLE_TOTAL'] / 1000 for i in rows]
+
+            data = zip(NBR_CPU, USR_TOTAL, SYS_TOTAL, IDLE_TOTAL)
+
+            with open('cpu_all.csv', 'w', newline='') as myfile:
+                writer = csv.writer(myfile)
+                writer.writerow(('NBR_CPU', 'USR_TOTAL', 'SYS_TOTAL', 'IDLE_TOTAL'))
+                for row in data:
+                    writer.writerow(row)
+                myfile.close()
+        except Exception as e:
+            print(e)
+
+
 
 
 s = SAPPerfAnalysis()
