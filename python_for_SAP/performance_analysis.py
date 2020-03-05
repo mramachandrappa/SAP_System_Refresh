@@ -2,7 +2,7 @@ from pyrfc import Connection
 from configparser import ConfigParser
 import csv
 
-class SAPRefresh:
+class SAPPerfAnalysis:
 
     def __init__(self):
         self.config = ConfigParser()
@@ -45,15 +45,15 @@ class SAPRefresh:
         except Exception as e:
             print(e)
 
-    def data_extract(self):
+    def mon_header_data(self):
         rows = []
         try:
             output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='/SDF/MON_HEADER')
             for key, value in output.items():
                 if key == 'DATA':
                     usertcode = value
-                    for users in usertcode:
-                        rows.append(users)
+                    for data in usertcode:
+                        rows.append(data)
             print([i for i in rows])
         except Exception as e:
             print(e)
@@ -84,21 +84,8 @@ class SAPRefresh:
 
 
 
-s = SAPRefresh()
-
-#user_list = s.users_list('USR02')
-#locked_users = s.locked_users()
-#users_locked = s.user_lock(user_list)
-
-#print("User_list =>", user_list)
-#print("Already_Locked_users =>", locked_users)
-#print("Final_users_locked =>", users_locked)
-
-#s.suspend_jobs('BTCTRNS1')
-#s.export_sys_tables('ZTABEXP')
-#s.export_printer_devices()
-#s.import_printer_devices()
+s = SAPPerfAnalysis()
 
 #s.analytics()
-#s.data_extract()
+#s.mon_header_data()
 s.get_mem_all()
