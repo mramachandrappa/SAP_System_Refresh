@@ -1,63 +1,63 @@
 ENTRY_ID,RESPTI,PROCTI,CPUTI,ROLLWAITTI,GUITIME
-/1BCDWB/DBE070L                                                         R,1,0,0,0,0
+/1BCDWB/DBE070L                                                         R,0.001,0,0,0,0
 MainMenu                                                                R,0,0,0,0,0
-RSABAPPROGRAM                                                           R,62616,14665,2360,44721,53276
-RSCLXCOP                                                                R,22,11,10,0,0
-RSTPDAMAIN                                                              R,35127,8312,420,26562,15094
-RS_TESTFRAME_CALL                                                       R,1,0,0,0,0
-SAPLBTCH                                                                R,3,1,10,0,0
-SCC3                                                                    T,2652,157,170,2435,2435
-SCC8                                                                    T,1885,63,90,1766,1766
-SE11                                                                    T,448,50,70,317,317
-SE16                                                                    T,3346,270,460,2614,2614
-SE37                                                                    T,26577,6460,2670,17593,21706
-SESSION_MANAGER                                                         T,8866,208,230,8538,8538
-SLICENSE                                                                T,4486,29,20,4447,4447
-SM37                                                                    T,3997,332,380,3432,3432
-SNRO                                                                    T,12927,214,210,12277,12277
-ST03N                                                                   T,1795,85,90,1404,1404
-SU01                                                                    T,654,145,170,0,0
-ZRSCLXCOP                                                               R,122345,72028,1450,49481,49481
-Login_Pw                                                                R,3,2,0,0,0
-RSM13000                                                                R,29,3,20,0,0
-RSPOWP00                                                                R,4309,2800,2190,0,0
-RSBTCRTE                                                                R,131,34,70,0,0
-SAPRSEUT                                EU_PUT                          R,52,19,20,0,0
-SAPRSLOG                                EU_REORG                        R,3915,2454,2540,0,0
-RDDEXPOL                                RDDVERSE                        R,256,58,80,0,0
-RDDIMPDP                                RDDIMPDP                        R,111,27,30,0,0
-RSBTCRTE                                                                R,92,25,40,0,0
-RSBTCRTE                                                                R,109,25,60,0,0
-ZRSCLXCOP                               ZRSCLXCOP                       R,8651,5139,1700,0,0
-(BATCH)                                                                 R,12402,6732,6150,0,0
-Buf.Sync                                                                R,1452,671,510,0,0
-AutoABAP                                                                R,596110,585466,33590,0,0
-RSM13000                                                                R,16,1,10,0,0
-SU01                                                                    T,35,12,10,0,0
-<AD_RESET_BUFFERED_TABLE>                                               R,1,0,0,0,0
-<AUTO SECURITY PROCESSING>                                              R,7904,3726,1320,0,0
-<AUTO TASKHANDLER PROCESSING>                                           R,1082,833,710,0,0
-<RPC(GENERATE ABAP (CLI WP 0))>                                         R,29,21,20,0,0
-<RPC(GENERATE ABAP (CLI WP 5))>                                         R,27,19,20,0,0
-<RPC(GENERATE ABAP (CLI WP 8))>                                         R,24,17,10,0,0
-<RPC(GENERATE DYNPRO (CLI WP 4))>                                       R,42,15,20,0,0
-<RPC(GENERATE DYNPRO (CLI WP 8))>                                       R,22,8,20,0,0
-<RPC(GENERATE DYNPRO (CLI WP 9))>                                       R,102,43,50,0,0
-RSDBAMDP                                                                R,71,24,30,0,0
-SAPLSMPI                                                                R,435,105,90,0,0
-<DDLOC CLEANUP>                                                         R,1079,906,410,0,0
-SAPMSSYC                                                                R,186,138,140,0,0
-<DELAY - ab_APGMain>                                                    R,961,504,830,0,0
-<DELAY - ab_ShmLifeTimePassed>                                          R,5,4,0,0,0
-<DELAY - dy_dbupd>                                                      R,139,73,50,0,0
-<DELAYED FUNCTION CALL>                                                 R,1,0,0,0,0
-<AUTO CCMS PROCESSING>                                                  R,2754,2485,590,0,0
-<NUMBER RANGE BUFFER>                                                   R,18,10,10,0,0
-RFC                                                                     R,18,12,0,0,0
-SAPLARFC                                                                R,500,479,10,0,0
-SAPLERFC                                                                R,466,160,130,0,0
-SAPLSEWORKINGAREA                                                       R,4,3,10,0,0
-python                                                                  R,5100,2469,1970,0,0
-RFC                                                                     R,517,475,470,0,0
-RS_AMDP_AUTOABAP                                                        R,4481,3528,3020,0,0
-RS_ENQ_CTX_CLEANUP_TASK                                                 R,4362,2060,2130,0,0
+RSABAPPROGRAM                                                           R,62.616,14.665,2.36,44.721,53.276
+RSCLXCOP                                                                R,0.022,0.011,0.01,0,0
+RSTPDAMAIN                                                              R,35.127,8.312,0.42,26.562,15.094
+RS_TESTFRAME_CALL                                                       R,0.001,0,0,0,0
+SAPLBTCH                                                                R,0.003,0.001,0.01,0,0
+SCC3                                                                    T,2.652,0.157,0.17,2.435,2.435
+SCC8                                                                    T,1.885,0.063,0.09,1.766,1.766
+SE11                                                                    T,0.448,0.05,0.07,0.317,0.317
+SE16                                                                    T,3.346,0.27,0.46,2.614,2.614
+SE37                                                                    T,26.577,6.46,2.67,17.593,21.706
+SESSION_MANAGER                                                         T,8.866,0.208,0.23,8.538,8.538
+SLICENSE                                                                T,4.486,0.029,0.02,4.447,4.447
+SM37                                                                    T,3.997,0.332,0.38,3.432,3.432
+SNRO                                                                    T,12.927,0.214,0.21,12.277,12.277
+ST03N                                                                   T,1.795,0.085,0.09,1.404,1.404
+SU01                                                                    T,0.654,0.145,0.17,0,0
+ZRSCLXCOP                                                               R,122.345,72.028,1.45,49.481,49.481
+Login_Pw                                                                R,0.003,0.002,0,0,0
+RSM13000                                                                R,0.029,0.003,0.02,0,0
+RSPOWP00                                                                R,4.309,2.8,2.19,0,0
+RSBTCRTE                                                                R,0.131,0.034,0.07,0,0
+SAPRSEUT                                EU_PUT                          R,0.052,0.019,0.02,0,0
+SAPRSLOG                                EU_REORG                        R,3.915,2.454,2.54,0,0
+RDDEXPOL                                RDDVERSE                        R,0.256,0.058,0.08,0,0
+RDDIMPDP                                RDDIMPDP                        R,0.111,0.027,0.03,0,0
+RSBTCRTE                                                                R,0.092,0.025,0.04,0,0
+RSBTCRTE                                                                R,0.109,0.025,0.06,0,0
+ZRSCLXCOP                               ZRSCLXCOP                       R,8.651,5.139,1.7,0,0
+(BATCH)                                                                 R,12.402,6.732,6.15,0,0
+Buf.Sync                                                                R,1.452,0.671,0.51,0,0
+AutoABAP                                                                R,596.11,585.466,33.59,0,0
+RSM13000                                                                R,0.016,0.001,0.01,0,0
+SU01                                                                    T,0.035,0.012,0.01,0,0
+<AD_RESET_BUFFERED_TABLE>                                               R,0.001,0,0,0,0
+<AUTO SECURITY PROCESSING>                                              R,7.904,3.726,1.32,0,0
+<AUTO TASKHANDLER PROCESSING>                                           R,1.082,0.833,0.71,0,0
+<RPC(GENERATE ABAP (CLI WP 0))>                                         R,0.029,0.021,0.02,0,0
+<RPC(GENERATE ABAP (CLI WP 5))>                                         R,0.027,0.019,0.02,0,0
+<RPC(GENERATE ABAP (CLI WP 8))>                                         R,0.024,0.017,0.01,0,0
+<RPC(GENERATE DYNPRO (CLI WP 4))>                                       R,0.042,0.015,0.02,0,0
+<RPC(GENERATE DYNPRO (CLI WP 8))>                                       R,0.022,0.008,0.02,0,0
+<RPC(GENERATE DYNPRO (CLI WP 9))>                                       R,0.102,0.043,0.05,0,0
+RSDBAMDP                                                                R,0.071,0.024,0.03,0,0
+SAPLSMPI                                                                R,0.435,0.105,0.09,0,0
+<DDLOC CLEANUP>                                                         R,1.079,0.906,0.41,0,0
+SAPMSSYC                                                                R,0.186,0.138,0.14,0,0
+<DELAY - ab_APGMain>                                                    R,0.961,0.504,0.83,0,0
+<DELAY - ab_ShmLifeTimePassed>                                          R,0.005,0.004,0,0,0
+<DELAY - dy_dbupd>                                                      R,0.139,0.073,0.05,0,0
+<DELAYED FUNCTION CALL>                                                 R,0.001,0,0,0,0
+<AUTO CCMS PROCESSING>                                                  R,2.754,2.485,0.59,0,0
+<NUMBER RANGE BUFFER>                                                   R,0.018,0.01,0.01,0,0
+RFC                                                                     R,0.018,0.012,0,0,0
+SAPLARFC                                                                R,0.5,0.479,0.01,0,0
+SAPLERFC                                                                R,0.466,0.16,0.13,0,0
+SAPLSEWORKINGAREA                                                       R,0.004,0.003,0.01,0,0
+python                                                                  R,5.1,2.469,1.97,0,0
+RFC                                                                     R,0.517,0.475,0.47,0,0
+RS_AMDP_AUTOABAP                                                        R,4.481,3.528,3.02,0,0
+RS_ENQ_CTX_CLEANUP_TASK                                                 R,4.362,2.06,2.13,0,0
