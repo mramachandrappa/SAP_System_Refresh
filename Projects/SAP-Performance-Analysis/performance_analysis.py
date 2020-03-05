@@ -108,7 +108,29 @@ class SAPPerfAnalysis:
         except Exception as e:
             print(e)
 
+    def server_list(self):
+        rows = []
+        try:
+            output = self.conn.call("TH_SERVER_LIST")
+            for key, value in output.items():
+                if key == 'LIST':
+                    hosts = value
+                    for val in hosts:
+                        rows.append(val)
 
+            NAME = [i['NAME'] / 1000 for i in rows]
+            HOST = [i['HOST'] / 1000 for i in rows]
+
+            data = zip(NAME, HOST)
+
+            with open('server_list.csv', 'w', newline='') as myfile:
+                writer = csv.writer(myfile)
+                writer.writerow(('NAME', 'HOST'))
+                for row in data:
+                    writer.writerow(row)
+                myfile.close()
+        except Exception as e:
+            print(e)
 
 
 s = SAPPerfAnalysis()
