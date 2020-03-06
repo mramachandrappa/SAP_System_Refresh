@@ -7,7 +7,7 @@ class SAPPerfAnalysis:
 
     def __init__(self):
         self.config = ConfigParser()
-        self.config.read("/root/SAP_System_Refresh/python_for_SAP/config.cnf")
+        self.config.read("/root/Python-For-SAP/Projects/SAP-Performance-Analysis/config.cnf")
         self.creds = self.config['SAP']
 
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'], sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
@@ -28,13 +28,6 @@ class SAPPerfAnalysis:
             CPUTI = [i['CPUTI']/1000 for i in rows]
             ROLLWAITTI = [i['ROLLWAITTI']/1000 for i in rows]
             GUITIME = [i['GUITIME']/1000 for i in rows]
-
-#            print(ENTRY_ID)
-#            print(RESPTI)
-#            print(PROCTI)
-#            print(CPUTI)
-#            print(ROLLWAITTI)
-#            print(GUITIME)
 
             data = zip(ENTRY_ID, RESPTI, PROCTI, CPUTI, ROLLWAITTI, GUITIME)
 
