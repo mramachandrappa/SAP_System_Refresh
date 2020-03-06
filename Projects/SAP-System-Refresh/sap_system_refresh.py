@@ -6,7 +6,7 @@ class SAPRefresh:
 
     def __init__(self):
         self.config = ConfigParser()
-        self.config.read("/root/SAP_System_Refresh/python_for_SAP/config.cnf")
+        self.config.read("/root/Python-For-SAP/Projects/SAP-Performance-Analysis/config.cnf")
         self.creds = self.config['SAP']
 
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'], sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
@@ -73,9 +73,24 @@ class SAPRefresh:
 
     def export_printer_devices(self):
 
-        print(self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME='RSPOXDEV', IV_REPNAME='RSPOXDEV', IV_VARNAME='PRINT_EXP'))
-        
-        self.conn.close()
+        desc = dict(
+            MANDT='100',
+            REPORT='RSPOXDEV',
+            VARIANT='ZPRINT_EXP'
+        )
+
+        content = [{'SELNAME': 'DO_SRV', 'KIND': 'P', 'LOW': 'X'},
+                   {'SELNAME': '_EXP', 'KIND': 'P', 'LOW': 'X'},
+                   {'SELNAME': 'DO_EXP', 'KIND': 'P', 'LOW': 'X'},
+                   {'SELNAME': 'DO_LOG', 'KIND': 'P', 'LOW': 'X'},
+                   {'SELNAME': 'WITH_CNF', 'KIND': 'P', 'LOW': 'X'},
+                   {'SELNAME': 'DEVICE', 'KIND': 'S', 'SIGN': 'I', 'OPTION': 'CP', 'LOW': '*'},
+                   {'SELNAME': 'FILE', 'KIND': 'P', 'LOW': '/tmp/printers'}]
+
+        text = [{'MANDT': '100', 'LANGU': 'EU', 'REPORT': 'RSPOXDEV', 'VARIANT':'ZPRINT_EXP', 'VTEXT': 'Printers Export'}]
+
+        print(self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT='RSPOXDEV', CURR_VARIANT='ZPRINT_EXP', VARI_DESC=desc,
+                             VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS= [{'DYNNR':'1000', 'KIND': 'P'}]))
 
     def import_printer_devices(self):
 
@@ -87,6 +102,7 @@ s = SAPRefresh()
 #user_list = s.users_list('USR02')
 #locked_users = s.locked_users()
 #users_locked = s.user_lock(user_list)
+s.export_printer_devices()
 
 #print("User_list =>", user_list)
 #print("Already_Locked_users =>", locked_users)
