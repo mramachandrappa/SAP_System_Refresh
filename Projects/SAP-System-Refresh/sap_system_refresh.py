@@ -89,8 +89,15 @@ class SAPRefresh:
 
         text = [{'MANDT': '100', 'LANGU': 'EU', 'REPORT': 'RSPOXDEV', 'VARIANT':'ZPRINT_EXP', 'VTEXT': 'Printers Export'}]
 
-        print(self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT='RSPOXDEV', CURR_VARIANT='ZPRINT_EXP', VARI_DESC=desc,
-                             VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS= [{'DYNNR':'1000', 'KIND': 'P'}]))
+        screen = [{'DYNNR': '1000', 'KIND': 'P'}]
+        try:
+            #self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT='RSPOXDEV', CURR_VARIANT='ZPRINT_EXP', VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
+
+            print(self.conn.call("RS_VARIANT_LIST", REPORT='RSPOXDEV', VARIANT='ZPRINT_EXP'))
+        except Exception as e:
+            print(e)
+
+
 
     def import_printer_devices(self):
 
