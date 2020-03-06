@@ -70,8 +70,8 @@ class SAPPerfAnalysis:
                     for val in mem_all:
                         rows.append(val)
 
-            FREE_MEM = [i['FREE_MEM']/1000 for i in rows]
-            PHYS_MEM = [i['PHYS_MEM']/1000 for i in rows]
+            FREE_MEM = [i['FREE_MEM'] for i in rows]
+            PHYS_MEM = [i['PHYS_MEM'] for i in rows]
 
             data = zip(FREE_MEM, PHYS_MEM)
         
@@ -94,10 +94,10 @@ class SAPPerfAnalysis:
                     for cpu in cpu_all:
                         rows.append(cpu)
 
-            NBR_CPU = [i['NBR_CPU'] / 1000 for i in rows]
-            USR_TOTAL = [i['USR_TOTAL'] / 1000 for i in rows]
-            SYS_TOTAL = [i['SYS_TOTAL'] / 1000 for i in rows]
-            IDLE_TOTAL = [i['IDLE_TOTAL'] / 1000 for i in rows]
+            NBR_CPU = [i['NBR_CPU'] for i in rows]
+            USR_TOTAL = [i['USR_TOTAL']  for i in rows]
+            SYS_TOTAL = [i['SYS_TOTAL']  for i in rows]
+            IDLE_TOTAL = [i['IDLE_TOTAL']  for i in rows]
 
             data = zip(NBR_CPU, USR_TOTAL, SYS_TOTAL, IDLE_TOTAL)
 
@@ -115,13 +115,13 @@ class SAPPerfAnalysis:
         try:
             output = self.conn.call("TH_SERVER_LIST")
             for key, value in output.items():
-                if key == 'LIST':
+                if key == 'LIST_IPV6':
                     hosts = value
                     for val in hosts:
                         rows.append(val)
 
-            NAME = [i['NAME'] / 1000 for i in rows]
-            HOST = [i['HOST'] / 1000 for i in rows]
+            NAME = [i['NAME'] for i in rows]
+            HOST = [i['HOST'] for i in rows]
 
             data = zip(NAME, HOST)
 
