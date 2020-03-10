@@ -79,7 +79,7 @@ class SAPRefresh:
         except Exception as e:
             return e
 
-        var_content = None
+        var_content = []
 
         for key, value in output.items():
             if key == 'VALUTAB':
@@ -122,30 +122,31 @@ class SAPRefresh:
         try:
             self.conn.call("RS_VARIANT_DELETE_RFC", REPORT=report, VARIANT=variant_name)
         except Exception as e:
-            return e
+            return "Variant doesn't exist"
 
-        if self.check_variant(report, variant_name) is True:
-            return True
-        else:
-            return False
+        if self.check_variant(report, variant_name) is False:
+            return "Variant Successfully Deleted"
+
 
     def export_printer_devices(self, report, variant_name):
 
-        if self.check_variaant(report, variant_name) is True:
+        if self.check_variant(report, variant_name) is True:
             try:
                 self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=report, IV_REPNAME=report, IV_VARNAME=variant_name)
+                return "Exported printer devices Successfully"
             except Exception as e:
                 return e
         else:
-            print("Please check if Variant exist")
+            return "Please check if Variant exist"
+
 
 s = SAPRefresh()
 #user_list = s.users_list('USR02')
 #locked_users = s.locked_users()
 #users_locked = s.user_lock(user_list)
-print(s.create_variant('RSPOXDEV', 'ZPRINT_EXP'))
+#print(s.create_variant('RSPOXDEV', 'ZPRINT_EXP'))
 #print(s.check_variant('RSPOXDEV', 'ZPRINT_EXP'))
-#print(s.delete_variant('RSPOXDEV', 'ZPRINT_EXP'))
+print(s.delete_variant('RSPOXDEV', 'ZPRINT_EXP'))
 print(s.export_printer_devices('RSPOXDEV', 'ZPRINT_EXP'))
 
 #print("User_list =>", user_list)
