@@ -111,13 +111,17 @@ class SAPRefresh:
 
         screen = [{'DYNNR': '1000', 'KIND': 'P'}]
         
-        try:
-            variant = self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT=report, CURR_VARIANT=variant_name, VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
-        except Exception as e:
-            return e
-
-        return variant
-    
+        if self.check_variant(report, variant_name) is False:
+            try:
+                self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT=report, CURR_VARIANT=variant_name, VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
+                if self.check_variant(report, variant_name) is True:
+                    return "Variant Successfully Created"
+            except Exception as e:
+                return e
+        else:
+            return "Variant already Exist"
+ 
+           
     def delete_variant(self, report, variant_name):
         try:
             self.conn.call("RS_VARIANT_DELETE_RFC", REPORT=report, VARIANT=variant_name)
@@ -144,10 +148,10 @@ s = SAPRefresh()
 #user_list = s.users_list('USR02')
 #locked_users = s.locked_users()
 #users_locked = s.user_lock(user_list)
-#print(s.create_variant('RSPOXDEV', 'ZPRINT_EXP'))
+print(s.create_variant('RSPOXDEV', 'ZPRINT_EXP'))
 #print(s.check_variant('RSPOXDEV', 'ZPRINT_EXP'))
 print(s.delete_variant('RSPOXDEV', 'ZPRINT_EXP'))
-print(s.export_printer_devices('RSPOXDEV', 'ZPRINT_EXP'))
+#print(s.export_printer_devices('RSPOXDEV', 'ZPRINT_EXP'))
 
 #print("User_list =>", user_list)
 #print("Already_Locked_users =>", locked_users)
