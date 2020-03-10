@@ -6,7 +6,7 @@ class SAPRefresh:
 
     def __init__(self):
         self.config = ConfigParser()
-        self.config.read("/root/Python-For-SAP/Projects/SAP-Performance-Analysis/config.cnf")
+        self.config.read("/root/Python-For-SAP/Projects/SAP-System-Refresh/config.cnf")
         self.creds = self.config['SAP']
 
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'], sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
@@ -90,14 +90,25 @@ class SAPRefresh:
         text = [{'MANDT': '100', 'LANGU': 'EU', 'REPORT': 'RSPOXDEV', 'VARIANT':'ZPRINT_EXP', 'VTEXT': 'Printers Export'}]
 
         screen = [{'DYNNR': '1000', 'KIND': 'P'}]
+        
         try:
-            #self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT='RSPOXDEV', CURR_VARIANT='ZPRINT_EXP', VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
-
-            print(self.conn.call("RS_VARIANT_LIST", REPORT='RSPOXDEV', VARIANT='ZPRINT_EXP'))
+            self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT='RSPOXDEV', CURR_VARIANT='ZPRINT_EXP', VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
         except Exception as e:
-            print(e)
+            return e
 
+        output = self.conn.call("RS_VARIANT_CONTENTS_RFC", REPORT='RSPOXDEV', VARIANT='ZPRINT_EXP')
+        
+        var_content = None
 
+        for key, value in output.items():
+            if key == 'VALUTAB':
+                var_content = value
+        
+        for cont in var_content:
+            if cont['SELNAME'] == 'FILE' and cont['LOW'] == '/tmp/printers':
+                return True
+        
+        return False
 
     def import_printer_devices(self):
 
@@ -109,7 +120,7 @@ s = SAPRefresh()
 #user_list = s.users_list('USR02')
 #locked_users = s.locked_users()
 #users_locked = s.user_lock(user_list)
-s.export_printer_devices()
+print(s.export_printer_devices())
 
 #print("User_list =>", user_list)
 #print("Already_Locked_users =>", locked_users)
