@@ -8,6 +8,7 @@ class SAPRefresh:
         self.config = ConfigParser()
         self.config.read("/root/Python-For-SAP/Projects/SAP-System-Refresh/config.cnf")
         self.creds = self.config['SAP']
+        self.client = self.creds['client']
 
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'], sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
     
@@ -71,12 +72,28 @@ class SAPRefresh:
 
         print(self.conn.call("SXPG_COMMAND_EXECUTE", COMMANDNAME=cmd))
 
-    def export_printer_devices(self):
+    def check_variant(self, report, variant_name):
+
+        output = self.conn.call("RS_VARIANT_CONTENTS_RFC", REPORT=report, VARIANT=variant_name)
+
+        var_content = None
+
+        for key, value in output.items():
+            if key == 'VALUTAB':
+                var_content = value
+
+        for cont in var_content:
+            if cont['SELNAME'] == 'FILE' and cont['LOW'] == '/tmp/printers':
+                return True
+
+        return False
+
+    def create_variant(self, report, variant_name):
 
         desc = dict(
-            MANDT='100',
-            REPORT='RSPOXDEV',
-            VARIANT='ZPRINT_EXP'
+            MANDT=self.client,
+            REPORT=report,
+            VARIANT=variant_name
         )
 
         content = [{'SELNAME': 'DO_SRV', 'KIND': 'P', 'LOW': 'X'},
@@ -87,28 +104,20 @@ class SAPRefresh:
                    {'SELNAME': 'DEVICE', 'KIND': 'S', 'SIGN': 'I', 'OPTION': 'CP', 'LOW': '*'},
                    {'SELNAME': 'FILE', 'KIND': 'P', 'LOW': '/tmp/printers'}]
 
-        text = [{'MANDT': '100', 'LANGU': 'EU', 'REPORT': 'RSPOXDEV', 'VARIANT':'ZPRINT_EXP', 'VTEXT': 'Printers Export'}]
+        text = [{'MANDT': self.client, 'LANGU': 'EU', 'REPORT': report, 'VARIANT':variant_name, 'VTEXT': 'Printers Export'}]
 
         screen = [{'DYNNR': '1000', 'KIND': 'P'}]
         
         try:
-            self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT='RSPOXDEV', CURR_VARIANT='ZPRINT_EXP', VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
+            variant = self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT=report, CURR_VARIANT=variant_name, VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
         except Exception as e:
             return e
 
-        output = self.conn.call("RS_VARIANT_CONTENTS_RFC", REPORT='RSPOXDEV', VARIANT='ZPRINT_EXP')
-        
-        var_content = None
+        return variant
 
-        for key, value in output.items():
-            if key == 'VALUTAB':
-                var_content = value
-        
-        for cont in var_content:
-            if cont['SELNAME'] == 'FILE' and cont['LOW'] == '/tmp/printers':
-                return True
-        
-        return False
+    def delete_variant(self, report, variant_name):
+
+
 
     def import_printer_devices(self):
 
@@ -120,7 +129,7 @@ s = SAPRefresh()
 #user_list = s.users_list('USR02')
 #locked_users = s.locked_users()
 #users_locked = s.user_lock(user_list)
-print(s.export_printer_devices())
+s.create_variant('RSPOXDEV', 'ZPRINT_EXP')
 
 #print("User_list =>", user_list)
 #print("Already_Locked_users =>", locked_users)
