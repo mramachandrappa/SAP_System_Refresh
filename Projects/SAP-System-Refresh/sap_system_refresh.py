@@ -143,15 +143,23 @@ class SAPRefresh:
         else:
             return "Please check if Variant exist"
 
+    def user_master_export(self):
+        try:
+            self.conn.call("RFC_READ_TABLE", QUERY_TABLE='E070L')
+        except Exception as e:
+            return e
+
 
 s = SAPRefresh()
 #user_list = s.users_list('USR02')
 #locked_users = s.locked_users()
 #users_locked = s.user_lock(user_list)
-print(s.create_variant('RSPOXDEV', 'ZPRINT_EXP'))
+#print(s.create_variant('RSPOXDEV', 'ZPRINT_EXP'))
 #print(s.check_variant('RSPOXDEV', 'ZPRINT_EXP'))
-print(s.delete_variant('RSPOXDEV', 'ZPRINT_EXP'))
+#print(s.delete_variant('RSPOXDEV', 'ZPRINT_EXP'))
 #print(s.export_printer_devices('RSPOXDEV', 'ZPRINT_EXP'))
+
+print(s.user_master_export())
 
 #print("User_list =>", user_list)
 #print("Already_Locked_users =>", locked_users)
