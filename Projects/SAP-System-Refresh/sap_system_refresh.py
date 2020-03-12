@@ -62,13 +62,21 @@ class SAPRefresh:
 
         return users_locked
 
-    def suspend_jobs(self, program_value):
+    def suspend_jobs(self):
 
-        print(self.conn.call("INST_EXECUTE_REPORT", PROGRAM=program_value))
+        try:
+            self.conn.call("INST_EXECUTE_REPORT", PROGRAM='BTCTRNS1')
+            return "Suspended Background Jobs"
+        except Exception:
+            return "Error while suspending the Jobs"
 
-    def export_sys_tables(self, cmd):
+    def export_sys_tables(self):
 
-        print(self.conn.call("SXPG_COMMAND_EXECUTE", COMMANDNAME=cmd))
+        try:
+            self.conn.call("SXPG_COMMAND_EXECUTE", COMMANDNAME='ZTABEXP')
+            return "Successfully Exported Quality System Tables"
+        except Exception:
+            return "Error while exporting system tables"
 
     def check_variant(self, report, variant_name):
 
@@ -223,7 +231,7 @@ print(s.locked_users())
 #print("Already_Locked_users =>", locked_users)
 #print("Final_users_locked =>", users_locked)
 
-#s.suspend_jobs('BTCTRNS1')
-#s.export_sys_tables('ZTABEXP')
+#s.suspend_jobs()
+#s.export_sys_tables()
 #s.export_printer_devices()
 #s.import_printer_devices()
