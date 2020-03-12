@@ -14,16 +14,15 @@ class SAPRefresh:
     def users_list(self):
         tables = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='USR02', FIELDS=[{'FIELDNAME': 'BNAME'}])
 
-        print(tables)
-        user_names = []
-        for key, value in tables.items():
-            if key == 'ENTRIES':
-                entries = value
-                for users in entries:
-                    for name in users.values():
-                        user_names.append(name[3:])
+        users = []
+        try:
+            for data in tables['DATA']:
+                for names in data.values():
+                    users.append(names)
+        except Exception:
+            return "Error while fetching user's list"
 
-        return user_names
+        return users
 
     def locked_users(self):
         params = dict(
@@ -208,6 +207,8 @@ class SAPRefresh:
 
 
 s = SAPRefresh()
+
+print(s.users_list())
 #user_list = s.users_list('USR02')
 #locked_users = s.locked_users()
 #users_locked = s.user_lock(user_list)
@@ -216,7 +217,7 @@ s = SAPRefresh()
 #print(s.delete_variant('RSPOXDEV', 'ZPRINT_EXP'))
 #print(s.export_printer_devices('RSPOXDEV', 'ZPRINT_EXP'))
 
-print(s.user_master_export('ZRSCLXCOP', 'ZUSR_EXP'))
+#print(s.user_master_export('ZRSCLXCOP', 'ZUSR_EXP'))
 
 #print("User_list =>", user_list)
 #print("Already_Locked_users =>", locked_users)
