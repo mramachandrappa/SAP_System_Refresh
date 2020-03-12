@@ -11,12 +11,10 @@ class SAPRefresh:
 
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'], sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
     
-    def users_list(self, table_name):
-        try:
-            tables = self.conn.call("RFC_GET_TABLE_ENTRIES", TABLE_NAME=table_name)
-        except Exception:
-            raise Exception("users_list : Unable to fetch users from table '%s'" % table_name)
+    def users_list(self):
+        tables = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='USR02', FIELDS=[{'FIELDNAME': 'BNAME'}])
 
+        print(tables)
         user_names = []
         for key, value in tables.items():
             if key == 'ENTRIES':
