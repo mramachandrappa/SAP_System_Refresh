@@ -12,10 +12,12 @@ class SAPRefresh:
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'], sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
     
     def users_list(self, table_name):
-        tables = self.conn.call("RFC_GET_TABLE_ENTRIES", TABLE_NAME=table_name)
-    
-        user_names = []
+        try:
+            tables = self.conn.call("RFC_GET_TABLE_ENTRIES", TABLE_NAME=table_name)
+        except Exception:
+            raise Exception("users_list : Unable to fetch users from table '%s'" % table_name)
 
+        user_names = []
         for key, value in tables.items():
             if key == 'ENTRIES':
                 entries = value
@@ -99,7 +101,7 @@ class SAPRefresh:
         try:
             self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT=report, CURR_VARIANT=variant_name, VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
         except Exception:
-            raise Exception("Variant Creation is Unsuccessfull!!")
+            raise Exception("Variant Creation is Unsuccessful!!")
 
         if self.check_variant(report, variant_name) is True:
             return "Variant Successfully Created"
@@ -187,6 +189,7 @@ class SAPRefresh:
         screen = [{'DYNNR': '1000', 'KIND': 'P'}]
 
         variant = None
+
         if pc3_val is not None and self.check_variant(report, variant_name) is False:
             try:
                 self.create_variant(report, variant_name, desc, content, text, screen)
@@ -196,8 +199,7 @@ class SAPRefresh:
         else:
             return "User-Master Export : pc3_val and variant check failed!!"
 
-
-        if self.check_variant(report, variant_name) is True:    
+        if variant is True:
             try:
                 self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=report, IV_REPNAME=report, IV_VARNAME=variant_name)
                 return "User Master Export is Done"
@@ -205,7 +207,6 @@ class SAPRefresh:
                 return e
         else:
             return "Please check if variant exist"
-
 
 
 s = SAPRefresh()
