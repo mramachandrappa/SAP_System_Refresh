@@ -88,19 +88,23 @@ class SAPRefresh:
             if cont['SELNAME'] == 'FILE' and cont['LOW'] == '/tmp/printers':
                 return True
 
+        for cont in var_content:
+            if cont['SELNAME'] == 'COMFILE' and cont['LOW'] == 'PC3C900006':
+                return True
+
         return False
 
     def create_variant(self, report, variant_name, desc, content, text, screen):
 
-        if self.check_variant(report, variant_name) is False:
-            try:
-                self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT=report, CURR_VARIANT=variant_name, VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
-                if self.check_variant(report, variant_name) is True:
-                    return True
-            except Exception as e:
-                return e
+        try:
+            self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT=report, CURR_VARIANT=variant_name, VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
+        except Exception:
+            raise Exception("Variant Creation is Unsuccessfull!!")
+
+        if self.check_variant(report, variant_name) is True:
+            return "Variant Successfully Created"
         else:
-            return False
+            raise Exception("Creation of variant is failed!!")
 
     def delete_variant(self, report, variant_name):
 
@@ -136,8 +140,8 @@ class SAPRefresh:
 
         if self.check_variant(report, variant_name) is False:
             try:
-                variant = self.create_variant(report, variant_name, desc, content, text, screen)
-                return "Variant Sucessfully Created"
+                self.create_variant(report, variant_name, desc, content, text, screen)
+                variant = True
             except Exception as e:
                 return e
 
@@ -153,7 +157,7 @@ class SAPRefresh:
     def user_master_export(self, report, variant_name):
 
         try:
-            output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='E070L')
+            output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='E070L') #IF Condition check needs to be implemented
         except Exception as e:
             return e
 
@@ -161,9 +165,9 @@ class SAPRefresh:
         for data in output['DATA']:
             for val in data.values():
                 pc3_val = ((val.split()[1][:3] + 'C') + str(int(val.split()[1][4:]) + 1))
-
+        
         desc = dict(
-            MANDT=self.creds['client'],
+            MANDT='asdf',
             REPORT=report,
             VARIANT=variant_name
         )
@@ -175,7 +179,7 @@ class SAPRefresh:
                    {'SELNAME': 'COMFILE', 'KIND': 'P', 'LOW': pc3_val},
                    {'SELNAME': 'PROF', 'KIND': 'P', 'LOW': 'X'},
                    {'SELNAME': 'PROFIL', 'KIND': 'P', 'LOW': 'SAP_USER'},
-                   {'SELNAME': 'TARGET', 'KIND': 'P', 'LOW': self.creds['sid'] + '.' + self.creds['client']}]
+                   {'SELNAME': 'TARGET', 'KIND': 'P', 'LOW': self.creds['sid']}]
 
         text = [{'MANDT': self.creds['client'], 'LANGU': 'EN', 'REPORT': report, 'VARIANT': variant_name,
                  'VTEXT': 'User Master Export'}]
@@ -185,12 +189,15 @@ class SAPRefresh:
         variant = None
         if pc3_val is not None and self.check_variant(report, variant_name) is False:
             try:
-                variant = self.create_variant(report, variant_name, desc, content, text, screen)
-                return "Variant Successfully Created"
+                self.create_variant(report, variant_name, desc, content, text, screen)
+                variant = True
             except Exception as e:
                 return e
+        else:
+            return "User-Master Export : pc3_val and variant check failed!!"
 
-        if variant is True:
+
+        if self.check_variant(report, variant_name) is True:    
             try:
                 self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=report, IV_REPNAME=report, IV_VARNAME=variant_name)
                 return "User Master Export is Done"
