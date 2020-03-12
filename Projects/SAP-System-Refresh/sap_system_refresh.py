@@ -8,7 +8,6 @@ class SAPRefresh:
         self.config = ConfigParser()
         self.config.read("/root/Python-For-SAP/Projects/SAP-System-Refresh/config.cnf")
         self.creds = self.config['SAP']
-        self.client = self.creds['client']
 
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'], sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
     
@@ -116,7 +115,7 @@ class SAPRefresh:
     def export_printer_devices(self, report, variant_name):
 
         desc = dict(
-            MANDT=self.client,
+            MANDT=self.creds['client'],
             REPORT=report,
             VARIANT=variant_name
         )
@@ -129,16 +128,18 @@ class SAPRefresh:
                    {'SELNAME': 'DEVICE', 'KIND': 'S', 'SIGN': 'I', 'OPTION': 'CP', 'LOW': '*'},
                    {'SELNAME': 'FILE', 'KIND': 'P', 'LOW': '/tmp/printers'}]
 
-        text = [{'MANDT': self.client, 'LANGU': 'EU', 'REPORT': report, 'VARIANT':variant_name, 'VTEXT': 'Printers Export'}]
+        text = [{'MANDT': self.creds['client'], 'LANGU': 'EN', 'REPORT': report, 'VARIANT':variant_name, 'VTEXT': 'Printers Export'}]
 
         screen = [{'DYNNR': '1000', 'KIND': 'P'}]
 
         variant = None
 
         if self.check_variant(report, variant_name) is False:
+            try:
                 variant = self.create_variant(report, variant_name, desc, content, text, screen)
-
-        print(variant)
+                return "Variant Sucessfully Created"
+            except Exception as e:
+                return e
 
         if variant is True:
             try:
@@ -149,15 +150,55 @@ class SAPRefresh:
         else:
             return "Please check if variant exist"
 
-    def user_master_export(self):
+    def user_master_export(self, report, variant_name):
+
         try:
             output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='E070L')
         except Exception as e:
             return e
 
+        pc3_val = None
         for data in output['DATA']:
             for val in data.values():
-                print((val.split()[1][:3] + 'C') + str(int(val.split()[1][4:]) + 1))
+                pc3_val = ((val.split()[1][:3] + 'C') + str(int(val.split()[1][4:]) + 1))
+
+        desc = dict(
+            MANDT=self.creds['client'],
+            REPORT=report,
+            VARIANT=variant_name
+        )
+
+        content = [{'SELNAME': 'COPYCLI', 'KIND': 'P', 'LOW': self.creds['client']},
+                   {'SELNAME': 'SUSR', 'KIND': 'P', 'LOW': 'X'},
+                   {'SELNAME': 'MODUS', 'KIND': 'P', 'LOW': 'E'},
+                   {'SELNAME': 'ALTINP', 'KIND': 'P', 'LOW': 'A'},
+                   {'SELNAME': 'COMFILE', 'KIND': 'P', 'LOW': pc3_val},
+                   {'SELNAME': 'PROF', 'KIND': 'P', 'LOW': 'X'},
+                   {'SELNAME': 'PROFIL', 'KIND': 'P', 'LOW': 'SAP_USER'},
+                   {'SELNAME': 'TARGET', 'KIND': 'P', 'LOW': self.creds['sid'] + '.' + self.creds['client']}]
+
+        text = [{'MANDT': self.creds['client'], 'LANGU': 'EN', 'REPORT': report, 'VARIANT': variant_name,
+                 'VTEXT': 'User Master Export'}]
+
+        screen = [{'DYNNR': '1000', 'KIND': 'P'}]
+
+        variant = None
+        if pc3_val is not None and self.check_variant(report, variant_name) is False:
+            try:
+                variant = self.create_variant(report, variant_name, desc, content, text, screen)
+                return "Variant Successfully Created"
+            except Exception as e:
+                return e
+
+        if variant is True:
+            try:
+                self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=report, IV_REPNAME=report, IV_VARNAME=variant_name)
+                return "User Master Export is Done"
+            except Exception as e:
+                return e
+        else:
+            return "Please check if variant exist"
+
 
 
 s = SAPRefresh()
@@ -169,7 +210,7 @@ s = SAPRefresh()
 #print(s.delete_variant('RSPOXDEV', 'ZPRINT_EXP'))
 #print(s.export_printer_devices('RSPOXDEV', 'ZPRINT_EXP'))
 
-print(s.user_master_export())
+print(s.user_master_export('ZRSCLXCOP', 'ZUSR_EXP'))
 
 #print("User_list =>", user_list)
 #print("Already_Locked_users =>", locked_users)
