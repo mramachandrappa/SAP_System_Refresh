@@ -35,11 +35,11 @@ class SAPRefresh:
         tables = self.conn.call("BAPI_USER_GETLIST", SELECTION_RANGE=[params])
         locked_user_list = []
 
-        for key, value in tables.items():
-            if key == 'USERLIST':
-                user_list = value
-                for users in user_list:
-                    locked_user_list.append(users['USERNAME'])
+        try:
+            for data in tables['USERLIST']:
+                locked_user_list.append(data['USERNAME'])
+        except Exception:
+            return "Error while fetching locked user's list"
 
         f = open("locked_user_list.txt", "w")
         f.write(str(locked_user_list))
@@ -208,7 +208,7 @@ class SAPRefresh:
 
 s = SAPRefresh()
 
-print(s.users_list())
+print(s.locked_users())
 #user_list = s.users_list('USR02')
 #locked_users = s.locked_users()
 #users_locked = s.user_lock(user_list)
