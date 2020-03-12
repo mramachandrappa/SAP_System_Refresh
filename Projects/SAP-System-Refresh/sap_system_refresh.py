@@ -91,7 +91,29 @@ class SAPRefresh:
 
         return False
 
-    def create_variant(self, report, variant_name):
+    def create_variant(self, report, variant_name, desc, content, text, screen):
+
+        if self.check_variant(report, variant_name) is False:
+            try:
+                self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT=report, CURR_VARIANT=variant_name, VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
+                if self.check_variant(report, variant_name) is True:
+                    return True
+            except Exception as e:
+                return e
+        else:
+            return False
+
+    def delete_variant(self, report, variant_name):
+
+        try:
+            self.conn.call("RS_VARIANT_DELETE_RFC", REPORT=report, VARIANT=variant_name)
+        except Exception:
+            return "Variant doesn't exist"
+
+        if self.check_variant(report, variant_name) is False:
+            return "Variant Successfully Deleted"
+
+    def export_printer_devices(self, report, variant_name):
 
         desc = dict(
             MANDT=self.client,
@@ -110,44 +132,32 @@ class SAPRefresh:
         text = [{'MANDT': self.client, 'LANGU': 'EU', 'REPORT': report, 'VARIANT':variant_name, 'VTEXT': 'Printers Export'}]
 
         screen = [{'DYNNR': '1000', 'KIND': 'P'}]
-        
-        if self.check_variant(report, variant_name) is False:
-            try:
-                self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT=report, CURR_VARIANT=variant_name, VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
-                if self.check_variant(report, variant_name) is True:
-                    return "Variant Successfully Created"
-            except Exception as e:
-                return e
-        else:
-            return "Variant already Exist"
- 
-           
-    def delete_variant(self, report, variant_name):
-        try:
-            self.conn.call("RS_VARIANT_DELETE_RFC", REPORT=report, VARIANT=variant_name)
-        except Exception as e:
-            return "Variant doesn't exist"
+
+        variant = None
 
         if self.check_variant(report, variant_name) is False:
-            return "Variant Successfully Deleted"
+                variant = self.create_variant(report, variant_name, desc, content, text, screen)
 
+        print(variant)
 
-    def export_printer_devices(self, report, variant_name):
-
-        if self.check_variant(report, variant_name) is True:
+        if variant is True:
             try:
                 self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=report, IV_REPNAME=report, IV_VARNAME=variant_name)
                 return "Exported printer devices Successfully"
             except Exception as e:
                 return e
         else:
-            return "Please check if Variant exist"
+            return "Please check if variant exist"
 
     def user_master_export(self):
         try:
-            self.conn.call("RFC_READ_TABLE", QUERY_TABLE='E070L')
+            output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='E070L')
         except Exception as e:
             return e
+
+        for data in output['DATA']:
+            for val in data.values():
+                print((val.split()[1][:3] + 'C') + str(int(val.split()[1][4:]) + 1))
 
 
 s = SAPRefresh()
