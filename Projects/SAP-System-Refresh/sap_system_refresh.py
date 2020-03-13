@@ -10,6 +10,9 @@ class SAPRefresh:
         self.creds = self.config['SAP']
 
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'], sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
+
+    def value(self):
+        self.conn.call("TMS_PM_READ_TP_PARAMETER", IV_PARAMETER='CTC', IV_SYSTEM='PC3')
     
     def users_list(self):
         tables = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='USR02', FIELDS=[{'FIELDNAME': 'BNAME'}])
@@ -54,11 +57,16 @@ class SAPRefresh:
         print("Except_users_list =>", except_users_list)
 
         users_locked = []
+        exceptions = []
 
         for user in user_list:
             if user not in except_users_list:
-                self.conn.call('BAPI_USER_LOCK', USERNAME=user)
-                users_locked.append(user)
+                try:
+                    self.conn.call('BAPI_USER_LOCK', USERNAME=user)
+                    users_locked.append(user)
+                except Exception as e:
+                    exceptions.append(e)
+                    pass
 
         return users_locked
 
@@ -172,9 +180,23 @@ class SAPRefresh:
         for data in output['DATA']:
             for val in data.values():
                 pc3_val = ((val.split()[1][:3] + 'C') + str(int(val.split()[1][4:]) + 1))
+
+        ctc = None
+        try:
+            result = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='TMSPCONF', FIELDS=[{'FIELDNAME': 'NAME'}, {'FIELDNAME': 'SYSNAME'}, {'FIELDNAME': 'VALUE'}])
+            for field in result['DATA']:
+                if field['WA'].split()[0] == 'CTC' and field['WA'].split()[1] == self.creds['sid']:
+                    ctc = field['WA'].split()[2]
+        except Exception:
+            print("Unable to fetch CTC Value")
         
+        if ctc is '0':
+            ctc_val = self.creds['sid']
+        else:
+            ctc_val = self.creds['sid'] + '.' + self.creds['client']
+
         desc = dict(
-            MANDT='asdf',
+            MANDT=self.creds['client'],
             REPORT=report,
             VARIANT=variant_name
         )
@@ -186,7 +208,7 @@ class SAPRefresh:
                    {'SELNAME': 'COMFILE', 'KIND': 'P', 'LOW': pc3_val},
                    {'SELNAME': 'PROF', 'KIND': 'P', 'LOW': 'X'},
                    {'SELNAME': 'PROFIL', 'KIND': 'P', 'LOW': 'SAP_USER'},
-                   {'SELNAME': 'TARGET', 'KIND': 'P', 'LOW': self.creds['sid']}]
+                   {'SELNAME': 'TARGET', 'KIND': 'P', 'LOW': ctc_val}]
 
         text = [{'MANDT': self.creds['client'], 'LANGU': 'EN', 'REPORT': report, 'VARIANT': variant_name,
                  'VTEXT': 'User Master Export'}]
@@ -200,7 +222,7 @@ class SAPRefresh:
                 self.create_variant(report, variant_name, desc, content, text, screen)
                 variant = True
             except Exception as e:
-                return e
+                return "User-Master Export : pc3_val and variant check failed!!"
         else:
             return "User-Master Export : pc3_val and variant check failed!!"
 
@@ -216,7 +238,8 @@ class SAPRefresh:
 
 s = SAPRefresh()
 
-print(s.locked_users())
+
+#print(s.locked_users())
 #user_list = s.users_list('USR02')
 #locked_users = s.locked_users()
 #users_locked = s.user_lock(user_list)
@@ -225,7 +248,7 @@ print(s.locked_users())
 #print(s.delete_variant('RSPOXDEV', 'ZPRINT_EXP'))
 #print(s.export_printer_devices('RSPOXDEV', 'ZPRINT_EXP'))
 
-#print(s.user_master_export('ZRSCLXCOP', 'ZUSR_EXP'))
+print(s.user_master_export('ZRSCLXCOP', 'ZUSR_EXP'))
 
 #print("User_list =>", user_list)
 #print("Already_Locked_users =>", locked_users)
