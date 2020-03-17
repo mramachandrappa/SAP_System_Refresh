@@ -74,11 +74,22 @@ class SAPPostRefresh:
         except Exception:
             return "Error while suspending the Jobs"
 
-    def background_work_process(self):
+    def check_backgroud_jobs(self):
         try:
-            output = self.conn.call("_TH_DISPLAY_WORKPROCESS_LIST")
-            print(output)
-        except Exception:
-            return "“Background work process is not set to 0. Please change it immediately"
+            output = self.conn.call("TH_WPINFO")
+        except Exception as e:
+            return e
+ #           return "“Background work process is not set to 0. Please change it immediately"
+        wp_type = []
+        for i in output['WPLIST']:
+            wp_type.append(i['WP_TYP'])
 
-        
+        if 'BGD' in wp_type:
+            return "“Background work process is not set to 0. Please change it immediately"
+        else:
+            return "Background work process is set to 0. Proceeding with next step"
+
+
+s = SAPPostRefresh()
+#print(s.locked_users())
+print(s.check_background_jobs())
