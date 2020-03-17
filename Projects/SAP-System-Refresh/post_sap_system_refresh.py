@@ -74,21 +74,110 @@ class SAPPostRefresh:
         except Exception:
             return "Error while suspending the Jobs"
 
-    def check_backgroud_jobs(self):
+    def check_background_jobs(self):
         try:
             output = self.conn.call("TH_WPINFO")
         except Exception as e:
             return e
- #           return "“Background work process is not set to 0. Please change it immediately"
+
         wp_type = []
-        for i in output['WPLIST']:
-            wp_type.append(i['WP_TYP'])
+        for type in output['WPLIST']:
+            wp_type.append(type['WP_TYP'])
 
         if 'BGD' in wp_type:
             return "“Background work process is not set to 0. Please change it immediately"
         else:
             return "Background work process is set to 0. Proceeding with next step"
 
+    def import_sys_tables(self):
+        try:
+            self.conn.call("SXPG_COMMAND_EXECUTE", COMMANDNAME='ZTABIMP')
+            return "Successfully Imported Quality System Tables"
+        except Exception:
+            return "Error while exporting system tables"
+
+    def check_variant(self, report, variant_name):
+        try:
+            output = self.conn.call("RS_VARIANT_CONTENTS_RFC", REPORT=report, VARIANT=variant_name)
+        except Exception as e:
+            return e
+
+        var_content = []
+
+        for key, value in output.items():
+            if key == 'VALUTAB':
+                var_content = value
+
+        for cont in var_content:
+            if cont['SELNAME'] == 'FORCE' and cont['LOW'] == 'X':
+                return True
+
+        for cont in var_content:
+            if cont['SELNAME'] == 'COMFILE' and cont['LOW'] == 'PC3C900006':
+                return True
+
+        return False
+
+    def create_variant(self, report, variant_name, desc, content, text, screen):
+        try:
+            self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT=report, CURR_VARIANT=variant_name, VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
+        except Exception:
+            raise Exception("Variant Creation is Unsuccessful!!")
+
+        if self.check_variant(report, variant_name) is True:
+            return "Variant Successfully Created"
+        else:
+            raise Exception("Creation of variant is failed!!")
+
+    def delete_variant(self, report, variant_name):
+        try:
+            self.conn.call("RS_VARIANT_DELETE_RFC", REPORT=report, VARIANT=variant_name)
+        except Exception:
+            return "Variant doesn't exist"
+
+        if self.check_variant(report, variant_name) is False:
+            return "Variant Successfully Deleted"
+
+    def del_old_bg_jobs(self, report, variant_name):
+        desc = dict(
+            MANDT=self.creds['client'],
+            REPORT=report,
+            VARIANT=variant_name
+        )
+
+        content = [{'SELNAME': 'JOBNAME', 'KIND': 'P', 'LOW': '*'},
+                   {'SELNAME': 'USERNAME', 'KIND': 'P', 'LOW': '*'},
+                   {'SELNAME': 'FRM_DATE', 'KIND': 'P', 'LOW': ''},
+                   {'SELNAME': 'FRM_TIME', 'KIND': 'P', 'LOW': ''},
+                   {'SELNAME': 'TO_DATE', 'KIND': 'P', 'LOW': ''},
+                   {'SELNAME': 'TO_TIME', 'KIND': 'P', 'LOW': ''},
+                   {'SELNAME': 'ENDDATE', 'KIND': 'P', 'LOW': ''},
+                   {'SELNAME': 'ENDTIME', 'KIND': 'P', 'LOW': ''},
+                   {'SELNAME': 'FIN', 'KIND': 'P', 'LOW': 'X'},
+                   {'SELNAME': 'ABORT', 'KIND': 'P', 'LOW': 'X'},
+                   {'SELNAME': 'FORCE', 'KIND': 'P', 'LOW': 'X'}]
+
+        text = [{'MANDT': self.creds['client'], 'LANGU': 'EN', 'REPORT': report, 'VARIANT':variant_name, 'VTEXT': 'Delete background jobs logs'}]
+
+        screen = [{'DYNNR': '1000', 'KIND': 'P'}]
+
+        variant = None
+
+        if self.check_variant(report, variant_name) is False:
+            try:
+                self.create_variant(report, variant_name, desc, content, text, screen)
+                variant = True
+            except Exception as e:
+                return e
+
+        if variant is True:
+            try:
+                self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=report, IV_REPNAME=report, IV_VARNAME=variant_name)
+                return "Old Background jobs logs are successfully deleted."
+            except Exception as e:
+                return e
+        else:
+            return "Please check if variant exist"
 
 s = SAPPostRefresh()
 #print(s.locked_users())
