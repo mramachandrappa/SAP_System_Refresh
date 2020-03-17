@@ -11,9 +11,6 @@ class SAPRefresh:
 
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'], sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
 
-    def value(self):
-        self.conn.call("TMS_PM_READ_TP_PARAMETER", IV_PARAMETER='CTC', IV_SYSTEM='PC3')
-    
     def users_list(self):
         tables = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='USR02', FIELDS=[{'FIELDNAME': 'BNAME'}])
 
@@ -71,7 +68,6 @@ class SAPRefresh:
         return users_locked
 
     def suspend_jobs(self):
-
         try:
             self.conn.call("INST_EXECUTE_REPORT", PROGRAM='BTCTRNS1')
             return "Suspended Background Jobs"
@@ -79,7 +75,6 @@ class SAPRefresh:
             return "Error while suspending the Jobs"
 
     def export_sys_tables(self):
-
         try:
             self.conn.call("SXPG_COMMAND_EXECUTE", COMMANDNAME='ZTABEXP')
             return "Successfully Exported Quality System Tables"
@@ -87,7 +82,6 @@ class SAPRefresh:
             return "Error while exporting system tables"
 
     def check_variant(self, report, variant_name):
-
         try:
             output = self.conn.call("RS_VARIANT_CONTENTS_RFC", REPORT=report, VARIANT=variant_name)
         except Exception as e:
@@ -110,7 +104,6 @@ class SAPRefresh:
         return False
 
     def create_variant(self, report, variant_name, desc, content, text, screen):
-
         try:
             self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT=report, CURR_VARIANT=variant_name, VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
         except Exception:
@@ -122,7 +115,6 @@ class SAPRefresh:
             raise Exception("Creation of variant is failed!!")
 
     def delete_variant(self, report, variant_name):
-
         try:
             self.conn.call("RS_VARIANT_DELETE_RFC", REPORT=report, VARIANT=variant_name)
         except Exception:
@@ -132,7 +124,6 @@ class SAPRefresh:
             return "Variant Successfully Deleted"
 
     def export_printer_devices(self, report, variant_name):
-
         desc = dict(
             MANDT=self.creds['client'],
             REPORT=report,
@@ -170,7 +161,6 @@ class SAPRefresh:
             return "Please check if variant exist"
 
     def user_master_export(self, report, variant_name):
-
         try:
             output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='E070L') #IF Condition check needs to be implemented
         except Exception as e:
@@ -248,7 +238,7 @@ s = SAPRefresh()
 #print(s.delete_variant('RSPOXDEV', 'ZPRINT_EXP'))
 #print(s.export_printer_devices('RSPOXDEV', 'ZPRINT_EXP'))
 
-print(s.user_master_export('ZRSCLXCOP', 'ZUSR_EXP'))
+#print(s.user_master_export('ZRSCLXCOP', 'ZUSR_EXP'))
 
 #print("User_list =>", user_list)
 #print("Already_Locked_users =>", locked_users)
