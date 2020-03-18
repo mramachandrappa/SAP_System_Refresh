@@ -116,6 +116,10 @@ class SAPPostRefresh:
             if cont['SELNAME'] == 'DISPLAY' and cont['LOW'] == 'X':
                 return True
 
+        for cont in var_content:
+            if cont['SELNAME'] == 'SET_EXEC' and cont['LOW'] == 'X':
+                return True
+
         return False
 
     def create_variant(self, report, variant_name, desc, content, text, screen):
@@ -179,7 +183,7 @@ class SAPPostRefresh:
         else:
             return "Please check if variant exist"
 
-    def del_outbound_queues_smq1(self, jobname, report, variant_name):
+    def del_outbound_queues(self, jobname, report, variant_name):
         desc = dict(
             MANDT=self.creds['client'],
             REPORT=report,
@@ -206,11 +210,44 @@ class SAPPostRefresh:
         if variant is True:
             try:
                 self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=jobname, IV_REPNAME=report, IV_VARNAME=variant_name)
-                return "Deleted all outbound Queues SMQ1"
+                return "Deleted all outbound Queues"
             except Exception as e:
                 return e
         else:
             return "Please check if variant exist"
+
+    def del_trfc_queues_sm58(self, jobname, report, variant_name):
+        desc = dict(
+            MANDT=self.creds['client'],
+            REPORT=report,
+            VARIANT=variant_name
+        )
+
+        content = [{'SELNAME': 'TID', 'KIND': 'P', 'LOW': '*'},
+                   {'SELNAME': 'SET_EXEC', 'KIND': 'P', 'LOW': 'X'}]
+
+        text = [{'MANDT': self.creds['client'], 'LANGU': 'EN', 'REPORT': report, 'VARIANT':variant_name, 'VTEXT': 'Delete all trfc Queues'}]
+
+        screen = [{'DYNNR': '1000', 'KIND': 'P'}]
+
+        variant = None
+
+        if self.check_variant(report, variant_name) is False:
+            try:
+                self.create_variant(report, variant_name, desc, content, text, screen)
+                variant = True
+            except Exception as e:
+                return e
+
+        if variant is True:
+            try:
+                self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=jobname, IV_REPNAME=report, IV_VARNAME=variant_name)
+                return "Deleted all TRC Queues SM58"
+            except Exception as e:
+                return e
+        else:
+            return "Please check if variant exist"
+
 
 
 s = SAPPostRefresh()
