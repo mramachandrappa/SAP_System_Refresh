@@ -2,7 +2,7 @@ from pyrfc import Connection
 from configparser import ConfigParser
 
 
-class SAPPostRefresh:
+class PostSystemRefresh:
 
     def __init__(self):
         self.config = ConfigParser()
