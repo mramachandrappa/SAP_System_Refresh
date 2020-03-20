@@ -2,6 +2,7 @@ from pyrfc import Connection
 from configparser import ConfigParser
 import os
 
+
 class PreSystemRefresh:
 
     def __init__(self):
@@ -224,27 +225,3 @@ class PreSystemRefresh:
                 return e
         else:
             return "Please check if variant exist"
-
-
-s = SAPRefresh()
-
-
-#print(s.locked_users())
-#user_list = s.users_list('USR02')
-#locked_users = s.locked_users()
-#users_locked = s.user_lock(user_list)
-#print(s.create_variant('RSPOXDEV', 'ZPRINT_EXP'))
-#print(s.check_variant('RSPOXDEV', 'ZPRINT_EXP'))
-#print(s.delete_variant('RSPOXDEV', 'ZPRINT_EXP'))
-#print(s.export_printer_devices('RSPOXDEV', 'ZPRINT_EXP'))
-
-#print(s.user_master_export('ZRSCLXCOP', 'ZUSR_EXP'))
-
-#print("User_list =>", user_list)
-#print("Already_Locked_users =>", locked_users)
-#print("Final_users_locked =>", users_locked)
-
-#s.suspend_jobs()
-#s.export_sys_tables()
-#s.export_printer_devices()
-#s.import_printer_devices()
