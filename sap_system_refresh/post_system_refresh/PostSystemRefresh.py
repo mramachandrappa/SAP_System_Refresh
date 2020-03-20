@@ -248,9 +248,3 @@ class PostSystemRefresh:
                 return e
         else:
             return "Please check if variant exist"
-
-
-
-s = SAPPostRefresh()
-#print(s.locked_users())
-print(s.check_background_jobs())
