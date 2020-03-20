@@ -58,9 +58,10 @@ Run python and type `from pyrfc import *` If this finishes silently, without err
 
 ## Development Setup
 * Create a Virtual Env, if desired
-    - python3 -m venv venv
-    - source venv/bin/activate
-* pip3 install --editable .
+    - `python3 -m venv venv`
+    - `source venv/bin/activate`
+* Install the package
+    - `pip3 install --editable .`
 
 ## Important Modules
 ### Main
