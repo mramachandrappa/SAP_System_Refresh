@@ -6,5 +6,8 @@ setup(
    description='Python code to perform SAP Post-System and Pre-System Refresh Activity',
    author='Mahesh Ramachandrappa',
    author_email='maheshramachandrappa91@gmail.com',
-   packages=find_packages()
+   packages=find_packages(),
+   install_requires=[
+        'pyrfc~=2.0.1'
+    ]
 )
