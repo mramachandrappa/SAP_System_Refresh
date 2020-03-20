@@ -48,13 +48,13 @@ $
 
 * Install the Python connector from the [latest release](https://github.com/SAP/PyRFC/releases/tag/2.0.4)
 
-Please look up the correct wheel name, depending on your platform and Python version.
+    Please look up the correct wheel name, depending on your platform and Python version.
 
-For current setup wheel is already downloaded, you can install it using,
+    For current setup wheel is already downloaded, you can install it using,
 
-`pip3 install pyrfc-connectors/pyrfc-2.0.1-cp37-cp37m-linux_x86_64.whl`
+    `pip3 install pyrfc-connectors/pyrfc-2.0.1-cp37-cp37m-linux_x86_64.whl`
 
-Run python and type `from pyrfc import *` If this finishes silently, without errors, the installation was successful.
+* Run python and type `from pyrfc import *` If this finishes silently, without errors, the installation was successful.
 
 ## Development Setup
 * Create a Virtual Env, if desired
