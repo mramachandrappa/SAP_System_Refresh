@@ -1,12 +1,12 @@
 from pyrfc import Connection
 from configparser import ConfigParser
-
+import os
 
 class PreSystemRefresh:
 
     def __init__(self):
         self.config = ConfigParser()
-        self.config.read("$HOME/.config/sap_config.cnf")
+        self.config.read(os.environ["HOME"] + '/.config/sap_config.cnf')
         self.creds = self.config['SAP']
 
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'], sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
