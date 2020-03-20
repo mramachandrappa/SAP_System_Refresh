@@ -57,10 +57,10 @@ For current setup wheel is already downloaded, you can install it using,
 Run python and type `from pyrfc import *` If this finishes silently, without errors, the installation was successful.
 
 ## Development Setup
-### Create a Virtual Env, if desired
-    > python3 -m venv venv
-    > source venv/bin/activate
-    > pip3 install --editable .
+* Create a Virtual Env, if desired
+    - python3 -m venv venv
+    - source venv/bin/activate
+* pip3 install --editable .
 
 ## Important Modules
 ### Main
