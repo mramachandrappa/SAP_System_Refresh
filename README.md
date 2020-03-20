@@ -9,8 +9,6 @@ The pyrfc Python package provides Python bindings for SAP NetWeaver RFC Library,
 
 Information on where to download the SAP NW RFC SDK [here](https://support.sap.com/en/product/connectors/nwrfcsdk.html)
 
-`Linux`
-
 * Create the SAP NW RFC SDK home directory, e.g. `/usr/local/sap/`
 
 * Unpack the SAP NW RFC SDK archive to it, e.g. `/usr/local/sap/nwrfcsdk/lib` shall exist.
@@ -44,8 +42,6 @@ $
 
 ### Step 2 : Python Connector Installation
 
-```Linux```
-
 * Install Python 3
 
 * Install pip3 if not already included: https://pip.pypa.io/en/stable/installing/
@@ -62,9 +58,9 @@ Run python and type `from pyrfc import *` If this finishes silently, without err
 
 ## Development Setup
 ### Create a Virtual Env, if desired
-    - python3 -m venv venv
-    - source venv/bin/activate
-    - pip3 install --editable .
+    > python3 -m venv venv
+    > source venv/bin/activate
+    > pip3 install --editable .
 
 ## Important Modules
 ### Main
