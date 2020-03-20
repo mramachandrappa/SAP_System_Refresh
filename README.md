@@ -3,7 +3,7 @@
 The pyrfc Python package provides Python bindings for SAP NetWeaver RFC Library, for a comfortable way of calling ABAP modules from Python and Python modules from ABAP, via SAP Remote Function Call (RFC) protocol.
 
 # Set UP
-### SAP NW RFC SDK Installation
+### Step 1 : SAP NW RFC SDK Installation
 
 Information on where to download the SAP NW RFC SDK [here](https://support.sap.com/en/product/connectors/nwrfcsdk.html)
 
@@ -40,7 +40,7 @@ $ `ldconfig -p | grep sap` # should show something like:
 $
 ```
 
-### Python Connector Installation
+### Step 2 : Python Connector Installation
 
 ```Linux```
 
@@ -56,7 +56,7 @@ For current setup wheel is already downloaded, you can install it using,
 
 `pip3 install pyrfc-connectors/pyrfc-2.0.1-cp37-cp37m-linux_x86_64.whl`
 
-Run python and type from pyrfc import *. If this finishes silently, without oputput, the installation was successful.
+Run python and type `from pyrfc import *`. If this finishes silently, without errors, the installation was successful.
 
 # Development Setup
 - Create a Virtual Env, if desired
