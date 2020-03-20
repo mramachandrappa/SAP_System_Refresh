@@ -60,8 +60,27 @@ For current setup wheel is already downloaded, you can install it using,
 
 Run python and type `from pyrfc import *` If this finishes silently, without errors, the installation was successful.
 
-# Development Setup
-- Create a Virtual Env, if desired
+## Development Setup
+### Create a Virtual Env, if desired
     - `python3 -m venv venv`
     - `source venv/bin/activate`
-- `pip3 install --editable .`
+    - `pip3 install --editable .`
+
+## Important Modules
+### Main
+* [pyrfc](https://github.com/SAP/PyRFC/releases/tag/2.0.4)
+* [configparser](https://docs.python.org/3.7/library/configparser.html)
+
+## Config file
+Current Project requires a config file named `sap_config.cnf`. The config file should be located in `$HOME/.config`.
+
+The config file should look like this:
+```
+[SAP]
+user = USERNAME
+passwd = PASSWORD
+ashost = SAP HOSTNAME
+sysnr = SYSNR
+sid = SYSID
+client = CLIENT
+```
