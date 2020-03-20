@@ -64,3 +64,5 @@ Run python and type `from pyrfc import *` If this finishes silently, without err
     - `source venv/bin/activate`
 - `pip3 install --editable .`
 
+```#### NOTE : Current setup is compatible with Linux with python 3.7 
+Check Official [Documentation](https://sap.github.io/PyRFC/install.html#installation) for Installation Guide ####```
