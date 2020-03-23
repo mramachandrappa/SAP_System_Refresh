@@ -42,10 +42,6 @@ class PreSystemRefresh:
         except Exception:
             return "Error while fetching locked user's list"
 
-        f = open("locked_user_list.txt", "w")
-        f.write(str(locked_user_list))
-        f.close()
-
         return locked_user_list
 
     def user_lock(self, user_list):
