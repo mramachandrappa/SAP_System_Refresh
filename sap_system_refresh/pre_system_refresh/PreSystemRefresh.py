@@ -33,33 +33,31 @@ class PreSystemRefresh:
                     OPTION='EQ',
                     LOW='L'
                     )
-        tables = self.conn.call("BAPI_USER_GETLIST", SELECTION_RANGE=[params])
+        try:
+            user_list = self.conn.call("BAPI_USER_GETLIST", SELECTION_RANGE=[params])
+        except Exception:
+            return "Could not return users whos status is already set to Administrator Lock"
+
         locked_user_list = []
 
         try:
-            for data in tables['USERLIST']:
-                locked_user_list.append(data['USERNAME'])
+            for user in user_list['USERLIST']:
+                locked_user_list.append(user['USERNAME'])
         except Exception:
             return "Error while fetching locked user's list"
 
         return locked_user_list
 
-    def user_lock(self, user_list):
-        f = open("except_user_list.txt", "r")
-        except_users_list = f.read()
-
-        print("Except_users_list =>", except_users_list)
-
+    def user_lock(self, user_list, except_users_list):
         users_locked = []
-        exceptions = []
 
         for user in user_list:
             if user not in except_users_list:
                 try:
                     self.conn.call('BAPI_USER_LOCK', USERNAME=user)
                     users_locked.append(user)
-                except Exception as e:
-                    exceptions.append(e)
+                except Exception:
+                    print("Not able to Lock user" + user + "Please check!")
                     pass
 
         return users_locked
