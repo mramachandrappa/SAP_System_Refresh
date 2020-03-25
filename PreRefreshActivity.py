@@ -1,4 +1,4 @@
-from sap_system_refresh.pre_system_refresh.PreSystemRefresh import *
+from sap_system_refresh.src.PreSystemRefresh import *
 
 def main():
 
