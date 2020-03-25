@@ -59,6 +59,8 @@ class PreSystemRefresh:
                 except Exception:
                     print("Not able to Lock user" + user + "Please check!")
                     pass
+            else:
+                print("" + user + " status is already locked!")
 
         return users_locked
 
