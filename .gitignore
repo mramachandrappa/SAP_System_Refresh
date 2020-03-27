@@ -8,3 +8,8 @@ Python_For_SAP/.idea
 .idea/*
 Python-For-SAP\Pre_System_Refresh\.idea\
 Python-For-SAP\Post_System_Refresh\.idea\
+sap_system_refresh.egg-info/
+sap_system_refresh/__init__.pyc
+sap_system_refresh/src/PostSystemRefresh.pyc
+sap_system_refresh/src/PreSystemRefresh.pyc
+sap_system_refresh/src/__init__.pyc
