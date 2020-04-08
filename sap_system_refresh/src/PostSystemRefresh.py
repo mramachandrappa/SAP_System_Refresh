@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from pyrfc import Connection
 from configparser import ConfigParser
 import os
