@@ -13,15 +13,16 @@ class PreSystemRefresh:
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'], sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
 
     def users_list(self):
-        tables = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='USR02', FIELDS=[{'FIELDNAME': 'BNAME'}])
+        try:
+            tables = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='USR02', FIELDS=[{'FIELDNAME': 'BNAME'}])
+        except Exception as e:
+            return "Error while fetching user's list from USR02 table: " + e
 
         users = []
-        try:
-            for data in tables['DATA']:
-                for names in data.values():
-                    users.append(names)
-        except Exception:
-            return "Error while fetching user's list"
+
+        for data in tables['DATA']:
+            for names in data.values():
+                users.append(names)
 
         return users
 
@@ -35,16 +36,13 @@ class PreSystemRefresh:
                     )
         try:
             user_list = self.conn.call("BAPI_USER_GETLIST", SELECTION_RANGE=[params])
-        except Exception:
-            return "Could not return users whos status is already set to Administrator Lock"
+        except Exception as e:
+            return e
 
         locked_user_list = []
 
-        try:
-            for user in user_list['USERLIST']:
+        for user in user_list['USERLIST']:
                 locked_user_list.append(user['USERNAME'])
-        except Exception:
-            return "Error while fetching locked user's list"
 
         return locked_user_list
 
@@ -57,7 +55,7 @@ class PreSystemRefresh:
                     self.conn.call('BAPI_USER_LOCK', USERNAME=user)
                     users_locked.append(user)
                 except Exception:
-                    print("Not able to Lock user" + user + "Please check!")
+                    print("Not able to Lock user: " + user + "Please check!")
                     pass
             else:
                 print("" + user + " status is already locked!")
@@ -67,9 +65,9 @@ class PreSystemRefresh:
     def suspend_jobs(self):
         try:
             self.conn.call("INST_EXECUTE_REPORT", PROGRAM='BTCTRNS1')
-            return "Suspended Background Jobs"
-        except Exception:
-            return "Error while suspending the Jobs"
+            return "Background Jobs are suspended"
+        except Exception as e:
+            return e
 
     def export_sys_tables(self):
         try:
