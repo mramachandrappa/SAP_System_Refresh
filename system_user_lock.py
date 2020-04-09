@@ -45,7 +45,7 @@ def main():
     user = None
     while True:
         if option == "proceed":
-            user = input("Enter the list of users one by one and type [Done] once completed: \n")
+            user = input("\nEnter the list of users one by one and type [Done] once completed: ")
             break
         elif option == "cancel":
             break
@@ -70,12 +70,12 @@ def main():
     while True:
         if option == "proceed":
             users_locked = lock.user_lock(users_list, locked_users)
-            print("Locked user's list =>", users_locked)
+            print("\nLocked user's list =>", users_locked)
             break
         elif option == "cancel":
             break
         else:
-            option = input("Please check the option specified [proceed | cancel]: ")
+            option = input("\nPlease check the option specified [proceed | cancel]: ")
             continue
 
 
