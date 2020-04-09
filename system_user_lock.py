@@ -8,16 +8,18 @@ def main():
 
     # --------------------Step: 1 > Fetch list of users from USR02 table----------
 
-    option = input("Step: 1 > Fetch list of users from USR02 table: [proceed | cancel]\n")
+    option = input("Step: 1 > Fetch list of users from USR02 table [proceed | cancel]:\n")
 
     users_list = None
-    if option == "proceed":
-        users_list = lock.users_list()
-        print("List of users from USR02 table =>", users_list)
-    elif option == "cancel":
-        pass
-    else:
-        print("Please check the option specified [proceed | cancel]")
+    while True:
+        if option == "proceed":
+            users_list = lock.users_list()
+            print("List of users from USR02 table =>", users_list, "\n")
+            break
+        elif option == "cancel":
+            break
+        else:
+            option = input("Please check the option specified [proceed | cancel]:\n")
 
     # ------------------- Step: 2 > list of users who's status is already set to administrator lock---------------
 
