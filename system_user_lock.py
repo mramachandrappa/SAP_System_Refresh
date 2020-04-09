@@ -43,24 +43,25 @@ def main():
     option = input("\nStep: 3 > Pass Exception user list to kept unlocked from administer locking [proceed | cancel]: ")
 
     user = None
-    if option == "proceed":
-        user = input("Enter the list of users one by one and type [Done] once completed: \n")
-
     while True:
         if option == "proceed":
-            my_list = [user]
-            while True:
-                user = input()
-                if user == "Done":
-                    break
-                else:
-                    my_list.append(user)
-            print("\nException user list entered are =>", my_list)
+            user = input("Enter the list of users one by one and type [Done] once completed: \n")
+            break
         elif option == "cancel":
             break
         else:
             option = input("\nPlease check the option specified [proceed | cancel]: ")
             continue
+
+    my_list = [user]
+    while True:
+        user = input()
+        if user == "Done":
+            break
+        else:
+            my_list.append(user)
+
+    print("\nException user list entered are =>", my_list)
 
     # --------------------- Step: 4 > Lock all users except the list of users obtained from customer-------------
 
