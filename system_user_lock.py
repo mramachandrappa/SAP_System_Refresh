@@ -2,7 +2,6 @@ from sap_system_refresh.src.PreSystemRefresh import *
 
 
 def prGreen(text):
-    print("\n")
     print("\033[92m {}\033[00m" .format(text))
 
 
@@ -19,6 +18,7 @@ def main():
     while True:
         if option == "proceed":
             users_list = lock.users_list()
+            print("List of users from USR02 table =>")
             prGreen(users_list)
             break
         elif option == "cancel":
@@ -35,7 +35,8 @@ def main():
     while True:
         if option == "proceed":
             locked_users = lock.locked_users()
-            print("\nList of users whose status is already set to administrator lock  =>", prGreen(locked_users))
+            print("\nList of users whose status is already set to administrator lock  =>")
+            prGreen(locked_users)
             break
         elif option == "cancel":
             break
@@ -69,7 +70,8 @@ def main():
         else:
             my_list.append(user)
 
-    print("\nException user list entered are =>", prGreen(my_list))
+    print("\nException user list entered are =>")
+    prGreen(my_list)
 
     # --------------------- Step: 4 > Lock all users except the list of users obtained from customer-------------
 
@@ -78,7 +80,8 @@ def main():
     while True:
         if option == "proceed":
             users_locked = lock.user_lock(users_list, my_list)
-            print("\nLocked user's list =>", prGreen(users_locked))
+            print("\nLocked user's list =>")
+            prGreen(users_locked)
             break
         elif option == "cancel":
             break
