@@ -45,16 +45,19 @@ def main():
     user = None
     while True:
         if option == "proceed":
-            user = input("\nEnter the list of users one by one and type [Done] once completed: ")
+            user = input("\nEnter the list of users one by one and type [Done] once completed: \n")
             break
         elif option == "cancel":
             break
         else:
             option = input("\nPlease check the option specified [proceed | cancel]: ")
-            continue
+            continue 
 
     my_list = [user]
     while True:
+        if user == "Done":
+            my_list.pop(0)
+            break
         user = input()
         if user == "Done":
             break
@@ -65,7 +68,7 @@ def main():
 
     # --------------------- Step: 4 > Lock all users except the list of users obtained from customer-------------
 
-    option = input("\n Step: 4 > lock all the users before starting quality refresh [proceed | cancel]: ")
+    option = input("\nStep: 4 > lock all the users before starting quality refresh [proceed | cancel]: ")
 
     while True:
         if option == "proceed":
