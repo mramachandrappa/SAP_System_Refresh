@@ -2,7 +2,7 @@ from sap_system_refresh.src.PreSystemRefresh import *
 
 
 def prGreen(text):
-    print("\033[92m {}\033[00m" .format(text))
+    print("\033[92m {}\033[00m" .format("\n" + text))
 
 
 def main():
@@ -18,7 +18,7 @@ def main():
     while True:
         if option == "proceed":
             users_list = lock.users_list()
-            print("\nList of users from USR02 table =>", prGreen(users_list))
+            prGreen(users_list)
             break
         elif option == "cancel":
             break
