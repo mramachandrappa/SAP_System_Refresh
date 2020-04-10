@@ -69,7 +69,7 @@ def main():
 
     while True:
         if option == "proceed":
-            users_locked = lock.user_lock(users_list, locked_users)
+            users_locked = lock.user_lock(users_list, my_list)
             print("\nLocked user's list =>", users_locked)
             break
         elif option == "cancel":
