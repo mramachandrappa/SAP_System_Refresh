@@ -2,7 +2,8 @@ from sap_system_refresh.src.PreSystemRefresh import *
 
 
 def prGreen(text):
-    print("\033[92m {}\033[00m" .format("\n" + text))
+    print("\n")
+    print("\033[92m {}\033[00m" .format(text))
 
 
 def main():
