@@ -77,9 +77,11 @@ def main():
 
     option = input("\nStep: 4 > lock all the users before starting quality refresh [proceed | cancel]: ")
 
+    user_list = [elem for elem in users_list if elem not in locked_users]
+
     while True:
         if option == "proceed":
-            users_locked = lock.user_lock(users_list, exception_list)
+            users_locked = lock.user_lock(user_list, exception_list)
             print("\nLocked user's list =>")
             prGreen(users_locked)
             break
