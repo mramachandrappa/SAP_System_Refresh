@@ -18,7 +18,7 @@ def main():
     while True:
         if option == "proceed":
             users_list = lock.users_list()
-            print("List of users from USR02 table =>")
+            print("\nList of users from USR02 table =>")
             prGreen(users_list)
             break
         elif option == "cancel":
@@ -59,19 +59,19 @@ def main():
             option = input("\nPlease check the option specified [proceed | cancel]: ")
             continue 
 
-    my_list = [user]
+    exception_list = [user]
     while True:
         if user == "Done":
-            my_list.pop(0)
+            exception_list.pop(0)
             break
         user = input()
         if user == "Done":
             break
         else:
-            my_list.append(user)
+            exception_list.append(user)
 
     print("\nException user list entered are =>")
-    prGreen(my_list)
+    prGreen(exception_list)
 
     # --------------------- Step: 4 > Lock all users except the list of users obtained from customer-------------
 
@@ -79,7 +79,7 @@ def main():
 
     while True:
         if option == "proceed":
-            users_locked = lock.user_lock(users_list, my_list)
+            users_locked = lock.user_lock(users_list, exception_list)
             print("\nLocked user's list =>")
             prGreen(users_locked)
             break
