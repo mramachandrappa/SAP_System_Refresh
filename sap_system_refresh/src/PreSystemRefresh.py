@@ -106,6 +106,18 @@ class PreSystemRefresh:
             if cont['SELNAME'] == 'COMFILE' and cont['LOW'] == 'PC3C900006':
                 return True
 
+        for cont in var_content:
+            if cont['SELNAME'] == 'FORCE' and cont['LOW'] == 'X':
+                return True
+
+        for cont in var_content:
+            if cont['SELNAME'] == 'DISPLAY' and cont['LOW'] == 'X':
+                return True
+
+        for cont in var_content:
+            if cont['SELNAME'] == 'SET_EXEC' and cont['LOW'] == 'X':
+                return True
+
         return False
 
     def create_variant(self, report, variant_name, desc, content, text, screen):
@@ -150,16 +162,13 @@ class PreSystemRefresh:
 
         screen = [{'DYNNR': '1000', 'KIND': 'P'}]
 
-        variant = None
-
         if self.check_variant(report, variant_name) is False:
             try:
                 self.create_variant(report, variant_name, desc, content, text, screen)
-                variant = True
             except Exception as e:
                 return e
 
-        if variant is True:
+        if self.check_variant(report, variant_name) is True:
             try:
                 self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=report, IV_REPNAME=report, IV_VARNAME=variant_name)
                 return self.prGreen("\nExported printer devices Successfully")
@@ -217,17 +226,15 @@ class PreSystemRefresh:
 
         screen = [{'DYNNR': '1000', 'KIND': 'P'}]
 
-        variant = None
         if pc3_val is not None and self.check_variant(report, variant_name) is False:
             try:
                 self.create_variant(report, variant_name, desc, content, text, screen)
-                variant = True
             except Exception as e:
                 return self.prRed("\nException occured while creating variant {}".format(e))
         else:
             return self.prRed("\nUser-Master Export : pc3_val and variant {} check failed!!".format(variant_name))
 
-        if variant is True:
+        if self.check_variant(report, variant_name) is True:
             try:
                 self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=report, IV_REPNAME=report, IV_VARNAME=variant_name)
                 return self.prGreen("\nUser Master Export is Completed!")
