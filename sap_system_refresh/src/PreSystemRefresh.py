@@ -62,27 +62,27 @@ class PreSystemRefresh:
             if user not in except_users_list:
                 try:
                     self.conn.call('BAPI_USER_LOCK', USERNAME=user)
-                    print(self.prGreen("\nUser: " + user + " is locked!"))
+                    self.prGreen("\nUser: " + user + " is locked!")
                     users_locked.append(user)
                 except Exception as e:
-                    print(self.prRed("\nNot able to Lock user: " + user + "Please check! {}".format(e)))
+                    self.prRed("\nNot able to Lock user: " + user + "Please check! {}".format(e))
                     pass
             else:
-                print(self.prYellow("\nUser: " + user + " is excepted from setting to Administer Lock."))
+                self.prYellow("\nUser: " + user + " is excepted from setting to Administer Lock.")
 
         return users_locked
 
     def suspend_jobs(self):
         try:
             self.conn.call("INST_EXECUTE_REPORT", PROGRAM='BTCTRNS1')
-            return "Background Jobs are suspended"
+            return self.prGreen("\nBackground Jobs are suspended!")
         except Exception as e:
             return self.prRed("\nFailed to Suspend Background Jobs: {}".format(e))
 
     def export_sys_tables(self):
         try:
             self.conn.call("SXPG_COMMAND_EXECUTE", COMMANDNAME='ZTABEXP')
-            return "Successfully Exported Quality System Tables"
+            return self.prGreen("\nSuccessfully Exported Quality System Tables")
         except Exception as e:
             return self.prRed("\nError while exporting system tables: {}".format(e))
 
@@ -90,7 +90,7 @@ class PreSystemRefresh:
         try:
             output = self.conn.call("RS_VARIANT_CONTENTS_RFC", REPORT=report, VARIANT=variant_name)
         except Exception as e:
-            return self.prRed("Failed to check variant {}: {}".format(variant_name, e))
+            return self.prRed("\nFailed to check variant {}: {}".format(variant_name, e))
 
         var_content = []
 
@@ -162,11 +162,11 @@ class PreSystemRefresh:
         if variant is True:
             try:
                 self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=report, IV_REPNAME=report, IV_VARNAME=variant_name)
-                return "Exported printer devices Successfully"
+                return self.prGreen("\nExported printer devices Successfully")
             except Exception as e:
-                return self.prRed("Failed to export printer devices! {}".format(e))
+                return self.prRed("\nFailed to export printer devices! {}".format(e))
         else:
-            return self.prRed("Creation of variant {} failed!".format(variant_name))
+            return self.prRed("\nCreation of variant {} failed!".format(variant_name))
 
     def user_master_export(self):
         report = "ZRSCLXCOP"
@@ -175,7 +175,7 @@ class PreSystemRefresh:
         try:
             output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='E070L') #IF Condition check needs to be implemented
         except Exception as e:
-            return self.prRed("Failed to get current transport sequence number from E070L Table: {}".format(e))
+            return self.prRed("\nFailed to get current transport sequence number from E070L Table: {}".format(e))
 
         pc3_val = None
         for data in output['DATA']:
@@ -234,4 +234,4 @@ class PreSystemRefresh:
             except Exception as e:
                 return self.prRed("\nUser Master Export is Failed!! {}".format(e))
         else:
-            return self.prRed("Variant {} creation has unknown issues, please check!".format(variant_name))
+            return self.prRed("\nVariant {} creation has unknown issues, please check!".format(variant_name))
