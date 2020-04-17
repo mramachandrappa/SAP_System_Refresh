@@ -13,7 +13,10 @@ class PostSystemRefresh:
 
         self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'], sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
 
-        self.preRefresh = PostSystemRefresh()
+        self.preRefresh = PreSystemRefresh()
+
+    def testing(self):
+        return self.preRefresh.users_list()
 
     def prRed(self, text):
         return "\033[91m {}\033[00m".format(text)
