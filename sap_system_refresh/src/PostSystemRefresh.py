@@ -2,7 +2,7 @@
 from pyrfc import Connection
 from configparser import ConfigParser
 import os
-import sap_system_refresh.src.PreSystemRefresh
+from sap_system_refresh.src.PreSystemRefresh import *
 
 class PostSystemRefresh:
 
