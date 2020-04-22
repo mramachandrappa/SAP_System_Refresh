@@ -62,7 +62,7 @@ class PreSystemRefresh:
             if user not in except_users_list:
                 try:
                     self.conn.call('BAPI_USER_LOCK', USERNAME=user)
-                    self.prGreen("\nUser: " + user + " is locked!")
+                    self.prGreen("\nUser: {} is locked!".format(user))
                     users_locked.append(user)
                 except Exception as e:
                     self.prRed("\nNot able to Lock user: " + user + "Please check! {}".format(e))
