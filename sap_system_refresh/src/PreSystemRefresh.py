@@ -124,7 +124,7 @@ class PreSystemRefresh:
         try:
             self.conn.call("RS_CREATE_VARIANT_RFC", CURR_REPORT=report, CURR_VARIANT=variant_name, VARI_DESC=desc, VARI_CONTENTS=content, VARI_TEXT=text, VSCREENS=screen)
         except Exception as e:
-            return self.prRed("\nVariant {} Creation is Unsuccessful!!".format(variant_name, e))
+            return self.prRed("\nVariant {} Creation is Unsuccessful!! : {}".format(variant_name, e))
 
         if self.check_variant(report, variant_name) is True:
             return self.prGreen("\nVariant {} Successfully Created".format(variant_name))
