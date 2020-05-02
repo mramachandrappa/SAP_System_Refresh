@@ -70,6 +70,7 @@ class PreSystemRefresh:
         except Exception as e:
             return "Failed to Suspend Background Jobs: {}".format(e)
 
+    # Needs work around
     def export_sys_tables(self):
         try:
             self.conn.call("SXPG_COMMAND_EXECUTE", COMMANDNAME='ZTABEXP')
