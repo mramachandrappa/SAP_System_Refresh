@@ -168,7 +168,7 @@ class PostSystemRefresh(PreSystemRefresh):
 # 1. Quality System User Lock           = Done
 # 2. Suspend background jobs            = Done
 # 3. Check background process           = Done
-# 4. Import Quality System Tab          = Not Done  #SSH connection to transfer .ctl file to target sap server.
+# 4. Import Quality System Tab          = Not Done  #FM not callable  (.ctl file to target sap server.)
 # 5. Delete old background jobs         = Done
 # 6. Delete outbound Queues SMQ1        = Done
 # 7. Delete outbound Queues SMQ2        = Done

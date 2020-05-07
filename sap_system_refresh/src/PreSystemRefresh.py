@@ -15,8 +15,9 @@ class PreSystemRefresh:
     def users_list(self):
         try:
             tables = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='USR02', FIELDS=[{'FIELDNAME': 'BNAME'}])
+            print(tables)
         except Exception as e:
-            return self.prRed("\nError while fetching user's list from USR02 table: {}".format(e))
+            return "Error while fetching user's list from USR02 table: {}".format(e)
 
         users = []
 
@@ -26,7 +27,7 @@ class PreSystemRefresh:
 
         return users
 
-    def locked_users(self):
+    def existing_locked_users(self):
         params = dict(
                     PARAMETER='ISLOCKED',
                     FIELD='LOCAL_LOCK',
@@ -46,22 +47,30 @@ class PreSystemRefresh:
 
         return locked_user_list
 
-    def user_lock(self, user_list, except_users_list):
-        users_locked = []
+    def user_lock(self, user_list, except_users_list, action):
+        if action == 'lock':
+            func_module = 'BAPI_USER_LOCK'
+        elif action == 'unlock':
+            func_module = 'BAPI_USER_UNLOCK'
+        else:
+            return "Please pass action [lock|unlock]"
 
+        users_locked = []
+        errors = dict()
+        users_exempted = []
         for user in user_list:
             if user not in except_users_list:
                 try:
-                    self.conn.call('BAPI_USER_LOCK', USERNAME=user)
-                    print("User: {} is locked!".format(user))
+                    self.conn.call(func_module, USERNAME=user)
                     users_locked.append(user)
                 except Exception as e:
-                    print("Not able to Lock user: " + user + "Please check! {}".format(e))
+                    errors[user] = e
                     pass
             else:
+                users_exempted.append(user)
                 print("User: " + user + " is excepted from setting to Administer Lock.")
 
-        return users_locked
+        return users_locked, errors, users_exempted
 
     def suspend_jobs(self):
         try:
@@ -225,7 +234,7 @@ class PreSystemRefresh:
 
 # 1. System user lock               = Done
 # 2. Suspend background Jobs        = Done
-# 3. Export Quality System Tables   = Not Done
+# 3. Export Quality System Tables   = Not Done # Funciton module is not callable
 # 4. Export Printer Devices         = Done     # SSH to fetch /tmp/printers file from target to ansible controller node.
 # 5. User Master Export             = Done     # SSH to fetch user master exported file.
 
