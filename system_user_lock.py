@@ -34,7 +34,7 @@ def main():
     locked_users = None
     while True:
         if option == "proceed":
-            locked_users = lock.locked_users()
+            locked_users = lock.existing_locked_users()
             print("\nList of users whose status is already set to administrator lock  =>")
             prGreen(locked_users)
             break
@@ -77,13 +77,13 @@ def main():
 
     option = input("\nStep: 4 > lock all the users before starting quality refresh [proceed | cancel]: ")
 
-    user_list = [elem for elem in users_list if elem not in locked_users]
-
     while True:
         if option == "proceed":
-            users_locked = lock.user_lock(user_list, exception_list)
+            users_locked, errors, users_excempted = lock.user_lock(users_list, exception_list, 'lock')
             print("\nLocked user's list =>")
-            prGreen(users_locked)
+            prGreen("users locked -> {}".format(users_locked))
+            prGreen("users cannot locked -> {}".format(errors))
+            prGreen("users excempted -> {}".format(users_excempted))
             break
         elif option == "cancel":
             break

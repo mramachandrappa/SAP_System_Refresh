@@ -48,12 +48,12 @@ class PreSystemRefresh:
         return locked_user_list
 
     def user_lock(self, user_list, except_users_list, action):
-        if action == 'lock':
+        if action == "lock":
             func_module = 'BAPI_USER_LOCK'
-        elif action == 'unlock':
+        elif action == "unlock":
             func_module = 'BAPI_USER_UNLOCK'
         else:
-            return "Please pass action [lock|unlock]"
+            return "Please pass third argument ['lock' | 'unlock']"
 
         users_locked = []
         errors = dict()
@@ -68,7 +68,7 @@ class PreSystemRefresh:
                     pass
             else:
                 users_exempted.append(user)
-                print("User: " + user + " is excepted from setting to Administer Lock.")
+                #print("User: " + user + " is excepted from setting to Administer Lock.")
 
         return users_locked, errors, users_exempted
 
