@@ -72,7 +72,7 @@ class PreSystemRefresh:
 
         return users_locked, errors, users_exempted
 
-    def suspend_jobs(self):
+    def suspend_bg_jobs(self):
         try:
             self.conn.call("INST_EXECUTE_REPORT", PROGRAM='BTCTRNS1')
             return "Background Jobs are suspended!"
