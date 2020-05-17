@@ -175,7 +175,7 @@ class PostSystemRefresh(PreSystemRefresh):
 # 8. Delete TRC Queues SM58             = Done
 # 9. Clean CCMS data                    = Testing phase
 # 10. Check Spool Consistency           = Testing phase
-# 11. Check background process to normal= Done
+# 11. Set background process to normal= Done
 # 11. SE06 – Post copy transport process            = Not Done >            #SAP GUI
 # 12. RDDNEWPP – RDDIMPDP background job execution  = Not Done >            #SAP GUI
 # 13. User Master Import                            = Not Done >            #variants

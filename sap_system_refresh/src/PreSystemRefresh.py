@@ -165,34 +165,47 @@ class PreSystemRefresh:
             except Exception as e:
                 return "Failed to export printer devices! {}".format(e)
 
-    def user_master_export(self):
-        report = "ZRSCLXCOP"
-        variant_name = "ZUSR_EXP"
-
+    def pc3_ctc_val(self):
         try:
-            output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='E070L') #IF Condition check needs to be implemented
+            output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='E070L')  # IF Condition check needs to be implemented
         except Exception as e:
             return "Failed to get current transport sequence number from E070L Table: {}".format(e)
 
+        result = dict()
         pc3_val = None
         for data in output['DATA']:
             for val in data.values():
                 pc3_val = ((val.split()[1][:3] + 'C') + str(int(val.split()[1][4:]) + 1))
+                result["pc3_val"] = pc3_val
 
         try:
-            result = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='TMSPCONF', FIELDS=[{'FIELDNAME': 'NAME'}, {'FIELDNAME': 'SYSNAME'}, {'FIELDNAME': 'VALUE'}])
+            output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='TMSPCONF', FIELDS=[{'FIELDNAME': 'NAME'}, {'FIELDNAME': 'SYSNAME'}, {'FIELDNAME': 'VALUE'}])
         except Exception as e:
             return "Failed while fetching TMC CTC Value: {}".format(e)
 
         ctc = None
-        for field in result['DATA']:
+        for field in output['DATA']:
             if field['WA'].split()[0] == 'CTC' and field['WA'].split()[1] == self.creds['sid']:
                 ctc = field['WA'].split()[2]
 
         if ctc is '1':
             ctc_val = self.creds['sid'] + '.' + self.creds['client']
+            result["ctc_val"] = ctc_val
         else:
             ctc_val = self.creds['sid']
+            result["ctc_val"] = ctc_val
+
+        result["client"] = self.creds['client']
+
+        if pc3_val and ctc is not None:
+            return result
+        else:
+            return False
+
+    def user_master_export(self, pc3_val, ctc_val):
+
+        report = "ZRSCLXCOP"
+        variant_name = "SST_ZUSR_EXP"
 
         desc = dict(
             MANDT=self.creds['client'],
