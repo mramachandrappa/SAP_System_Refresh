@@ -202,24 +202,12 @@ class PreSystemRefresh:
         else:
             return False
 
-    def user_master_export(self, pc3_val, ctc_val):
-
-        if pc3_val is not None and self.check_variant(report, variant_name) is False:
-            try:
-                self.create_variant(report, variant_name, desc, content, text, screen)
-            except Exception as e:
-                return "Exception occured while creating variant {}".format(e)
-        else:
-            return "User-Master Export : pc3_val and variant {} check failed!!".format(variant_name)
-
-        if self.check_variant(report, variant_name) is True:
-            try:
-                self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=report, IV_REPNAME=report, IV_VARNAME=variant_name)
-                return "User Master Export is Completed!"
-            except Exception as e:
-                return "User Master Export is Failed!! {}".format(e)
-        else:
-            return "Variant {} creation has unknown issues, please check!".format(variant_name)
+    def user_master_export(self, report, variant_name):
+        try:
+            self.conn.call("SUBST_START_REPORT_IN_BATCH", IV_JOBNAME=report, IV_REPNAME=report, IV_VARNAME=variant_name)
+            return "User Master Export is Completed!"
+        except Exception as e:
+            return "User Master Export is Failed!! {}".format(e)
 
 
 # 1. System user lock               = Done
