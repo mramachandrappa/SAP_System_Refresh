@@ -15,7 +15,6 @@ class PreSystemRefresh:
     def users_list(self):
         try:
             tables = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='USR02', FIELDS=[{'FIELDNAME': 'BNAME'}])
-            print(tables)
         except Exception as e:
             return "Error while fetching user's list from USR02 table: {}".format(e)
 
@@ -116,12 +115,12 @@ class PreSystemRefresh:
             if key == 'VALUTAB':
                 var_content = value
 
-        for cont in var_content:
+        for cont in var_content:        # Export Printer devices
             if cont['SELNAME'] == 'FILE' and cont['LOW'] == '/tmp/printers':
                 return True
 
-        for cont in var_content:
-            if cont['SELNAME'] == 'COMFILE' and cont['LOW'] == 'PC3C900006':
+        for cont in var_content:        # User Master Export
+            if cont['SELNAME'] == 'COPYCLI' and cont['LOW'] == self.creds['client']:
                 return True
 
         for cont in var_content:
@@ -157,6 +156,8 @@ class PreSystemRefresh:
 
         if self.check_variant(report, variant_name) is False:
             return "Variant {} Successfully Deleted".format(variant_name)
+        else:
+            return "Failed to delete variant {}".format(variant_name)
 
     def export_printer_devices(self, report, variant_name):
             try:
