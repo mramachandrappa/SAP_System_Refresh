@@ -78,8 +78,7 @@ class PreSystemRefresh:
         except Exception as e:
             return "Failed to Suspend Background Jobs: {}".format(e)
 
-    # Needs work around
-    def export_sys_tables(self):
+    def export_sys_tables_cmd_insert(self):
         params = dict(
             NAME='ZTABEXP',
             OPSYSTEM='Linux',
@@ -88,15 +87,12 @@ class PreSystemRefresh:
         )
 
         try:
-            self.conn.call("ARCHIVFILE_CLIENT_TO_SERVER", PATH="", TARGETPATH='/tmp')
-        except Exception as e:
-            return "Error while copying exp.ctl file to SAP server: {}".format(e)
-
-        try:
-            self.conn.call("SXPG_COMMAND_INSERT", COMMAND=params)
+            self.conn.call("ZSXPG_COMMAND_INSERT", COMMAND=params)
+            return "Successfully created command {}".format(params['NAME'])
         except Exception as e:
             return "Error while inserting Command arguments: {}".format(e)
 
+    def export_sys_tables_cmd_execute(self):
         try:
             self.conn.call("SXPG_COMMAND_EXECUTE", COMMANDNAME='ZTABEXP')
             return "Successfully Exported Quality System Tables"
