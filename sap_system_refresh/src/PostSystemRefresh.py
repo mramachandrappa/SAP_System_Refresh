@@ -154,10 +154,19 @@ class PostSystemRefresh(PreSystemRefresh):
     def check_spool_consistency(self):
         try:
             output = self.conn.call("INST_EXECUTE_REPORT", PROGRAM='RSPO1043')
-            # Needs to wait until report is executed successfully.
-            return output
         except Exception as e:
-            return "Error while checking_spool_consistency: {}".format(e)
+            return "Failed while checking_spool_consistency: {}".format(e)
+
+        data = []
+        mes = dict()
+        for res in output['OUTPUT_TAB']:
+            for k, v in res.items():
+                if v:
+                    mes[k] = v
+                    data.append(mes)
+                    print(mes)
+
+        return data
 
     # Implementation phase
     def se06_post_copy_transport(self):
