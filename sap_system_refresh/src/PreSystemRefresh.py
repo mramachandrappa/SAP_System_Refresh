@@ -92,7 +92,24 @@ class PreSystemRefresh:
         except Exception as e:
             return "Error while inserting Command arguments: {}".format(e)
 
-    def export_sys_tables_cmd_execute(self):
+    def export_sys_tables(self):
+        params = dict(
+            NAME='ZTABEXP',
+            OPSYSTEM='Linux',
+            OPCOMMAND='R3trans',
+            PARAMETERS='-w /tmp/exp_ecc.log /tmp/exp.ctl'
+        )
+
+        try:
+            self.conn.call("ARCHIVFILE_CLIENT_TO_SERVER", PATH="", TARGETPATH='/tmp')
+        except Exception as e:
+            return "Error while copying exp.ctl file to SAP server: {}".format(e)
+
+        try:
+            self.conn.call("SXPG_COMMAND_INSERT", COMMAND=params)
+        except Exception as e:
+            return "Error while inserting Command arguments: {}".format(e)
+
         try:
             self.conn.call("SXPG_COMMAND_EXECUTE", COMMANDNAME='ZTABEXP')
             return "Successfully Exported Quality System Tables"
