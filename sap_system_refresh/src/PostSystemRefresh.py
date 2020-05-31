@@ -158,15 +158,15 @@ class PostSystemRefresh(PreSystemRefresh):
             return "Failed while checking_spool_consistency: {}".format(e)
 
         data = []
-        mes = dict()
         for res in output['OUTPUT_TAB']:
             for k, v in res.items():
+                mes = dict()
                 if v:
                     mes[k] = v
                     data.append(mes)
-                    print(mes)
-
-        return data
+                  #  print(mes)
+        for i in data:
+            print(i)
 
     # Implementation phase
     def se06_post_copy_transport(self):
