@@ -164,33 +164,41 @@ class PostSystemRefresh(PreSystemRefresh):
                 if v:
                     mes[k] = v
                     data.append(mes)
-                  #  print(mes)
-        for i in data:
-            print(i)
+
+        return data
 
     # Implementation phase
     def se06_post_copy_transport(self):
         pass
 
+    def user_master_import(self):
+        try:
+            output = self.conn.call("TMS_TP_CHECK_TRANS_DIR", IV_TARGET_SYSTEM=None)
+        except Exception as e:
+            return "Failed while calling FM TMS_TP_CHECK_TRANS_DIR"
+
+        print(output)
+
+
 
 # Steps Completed in Post Refresh
-# 1. Quality System User Lock           = Done
-# 2. Suspend background jobs            = Done
-# 3. Check background process           = Done
-# 4. Import Quality System Tab          = Not Done  #FM not callable  (.ctl file to target sap server.)
-# 5. Delete old background jobs         = Done
-# 6. Delete outbound Queues SMQ1        = Done
-# 7. Delete outbound Queues SMQ2        = Done
-# 8. Delete TRC Queues SM58             = Done
-# 9. Clean CCMS data                    = Testing phase
-# 10. Check Spool Consistency           = Testing phase
-# 11. Set background process to normal= Done
-# 11. SE06 – Post copy transport process            = Not Done >            #SAP GUI
-# 12. RDDNEWPP – RDDIMPDP background job execution  = Not Done >            #SAP GUI
-# 13. User Master Import                            = Not Done >            #variants
-# 14. Import all Printer output devices             = Not Done >            #SAP GUI
-# 15. BDLS – Logical system conversion              = Not Done >            #variants
-# 16. ZSCREEN_LOGIN_INFO - change                   = Not Done >            #variants
-# 17. Quality System User Unlock                    = Testing Phase
+# 1. Quality System User Lock               = Done
+# 2. Suspend background jobs                = Done
+# 3. Check background process               = Done
+# 4. Import Quality System Tab              = Not Done  #FM not callable  (.ctl file to target sap server.)
+# 5. Delete old background jobs             = Done
+# 6. Delete outbound Queues SMQ1            = Done
+# 7. Delete outbound Queues SMQ2            = Done
+# 8. Delete TRC Queues SM58                 = Done
+# 9. Clean CCMS data                        = Done
+# 10. Check Spool Consistency               = Done
+# 11. Set background process to normal      = Done
+# 12. SE06 – Post copy transport process            = Not Done >            #SAP GUI
+# 13. RDDNEWPP – RDDIMPDP background job execution  = Not Done >            #SAP GUI
+# 14. User Master Import                            = Not Done >            #variants
+# 15. Import all Printer output devices             = Not Done >            #SAP GUI
+# 16. BDLS – Logical system conversion              = Not Done >            #variants
+# 17. ZSCREEN_LOGIN_INFO - change                   = Not Done >            #variants
+# 18. Quality System User Unlock                    = Done
 
 
