@@ -173,9 +173,9 @@ class PostSystemRefresh(PreSystemRefresh):
 
     def user_master_import(self):
         try:
-            output = self.conn.call("TMS_TP_CHECK_TRANS_DIR", IV_TARGET_SYSTEM=None)
+            output = self.conn.call("TMS_TP_CHECK_TRANS_DIR", IV_TARGET_SYSTEM="NONE", IV_READ="X")
         except Exception as e:
-            return "Failed while calling FM TMS_TP_CHECK_TRANS_DIR"
+            return "Failed while calling FM TMS_TP_CHECK_TRANS_DIR: {}".format(e)
 
         print(output)
 
