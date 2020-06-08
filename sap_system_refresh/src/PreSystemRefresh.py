@@ -180,15 +180,17 @@ class PreSystemRefresh:
                 result["trans_val"] = trans_val
 
         try:
-            output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='TMSPCONF',
-                                    FIELDS=[{'FIELDNAME': 'NAME'}, {'FIELDNAME': 'SYSNAME'}, {'FIELDNAME': 'VALUE'}])
+            output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='TMSPCONF')
         except Exception as e:
             return "Failed while fetching TMC CTC Value: {}".format(e)
 
         ctc = None
+        bin_path = None
         for field in output['DATA']:
-            if field['WA'].split()[0] == 'CTC' and field['WA'].split()[1] == self.creds['sid']:
+            if field['WA'].split()[1] == 'CTC' and self.creds['sid'] in field['WA'].split()[0]:
                 ctc = field['WA'].split()[2]
+            if field['WA'].split()[1] == 'TRANSDIR' and self.creds['sid'] in field['WA'].split()[0]:
+                bin_path = field['WA'].split()[2] + '/bin'
 
         if ctc is '1':
             sid_ctc_val = self.creds['sid'] + '.' + self.creds['client']
@@ -197,6 +199,7 @@ class PreSystemRefresh:
             sid_ctc_val = self.creds['sid']
             result["sid_ctc_val"] = sid_ctc_val
 
+        result["bin_path"] = bin_path
         result["client"] = self.creds['client']
         result["sid_val"] = self.creds['sid']
 
