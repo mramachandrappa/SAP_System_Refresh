@@ -173,7 +173,7 @@ class PostSystemRefresh(PreSystemRefresh):
 
     def user_master_import(self):
         try:
-            output = self.conn.call("TMS_TP_CHECK_TRANS_DIR", IV_TARGET_SYSTEM="NONE", IV_READ="X")
+            output = self.conn.call("RFC_READ_TABLE", QUERY_TABLE='TMSPCONF')
         except Exception as e:
             return "Failed while calling FM TMS_TP_CHECK_TRANS_DIR: {}".format(e)
 
