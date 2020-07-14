@@ -7,11 +7,18 @@ class PreSystemRefresh:
 
     def __init__(self):
         self.config = ConfigParser()
-        self.config.read(os.environ["HOME"] + '/.config/sap_config.cnf')
-        self.creds = self.config['SAP']
+        try:
+            self.config.read(os.environ["HOME"] + '/.config/sap_config.ini')
+            self.creds = self.config['SAP']
 
-        self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'],
-                               sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
+            self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'],
+                                   sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
+        except KeyError:
+            self.config.read(os.path.expanduser('~') + '\.config\sap_config.ini')
+            self.creds = self.config['SAP']
+
+            self.conn = Connection(user=self.creds['user'], passwd=self.creds['passwd'], ashost=self.creds['ashost'],
+                                   sysnr=self.creds['sysnr'], sid=self.creds['sid'], client=self.creds['client'])
 
     def users_list(self):
         try:
